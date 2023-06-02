@@ -24,11 +24,11 @@ namespace ariel {
 
             bool isPrime() const;
 
-             long getLocation() const;
+            long getLocation() const;
 
             long getNextPrime() const;
 
-            void setLocation( long location);
+            void setLocation(long location);
 
             void setNextPrime(long nextPrime);
 
