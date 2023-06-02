@@ -15,11 +15,18 @@ namespace ariel {
 
     public:
         class MagicalNode {
-            int _value;
-            bool _prime;
-            long _location;
-            long next_prime;
+
+        private:
+
+            int _value{};
+            bool _prime{};
+            long _location{};
+            long next_prime{};
+
         public:
+
+            // Getters
+
             int getValue() const;
 
             bool isPrime() const;
@@ -28,12 +35,30 @@ namespace ariel {
 
             long getNextPrime() const;
 
+
+            // Setters
+
             void setLocation(long location);
 
             void setNextPrime(long nextPrime);
 
-        public:
+            // Constructors/Destructors
+
             explicit MagicalNode(int val);
+
+            MagicalNode(MagicalNode const &_other);
+
+            MagicalNode(MagicalNode &&_other) noexcept;
+
+            ~MagicalNode();
+
+            // Copy/move assignments
+
+            MagicalNode &operator=(const MagicalNode &_other);
+
+            MagicalNode &operator=(MagicalNode &&_other) noexcept;
+
+            // Boolean operators
 
             friend bool operator>(const MagicalNode &_node1, const MagicalNode &_node2);
 
@@ -48,7 +73,12 @@ namespace ariel {
         static bool is_prime(int num);
 
 
+        /**
+         * MagicalContainer
+         */
+
     private:
+
         long _size;
         vector<MagicalNode *> container;
         long first_prime;
@@ -57,13 +87,18 @@ namespace ariel {
 
 
     public:
+
         MagicalContainer();
 
         MagicalContainer(const MagicalContainer &_other);
 
+        MagicalContainer(MagicalContainer &&_other) noexcept;
+
         ~MagicalContainer();
 
         MagicalContainer &operator=(const MagicalContainer &_other);
+
+        MagicalContainer &operator=(MagicalContainer &&_other) noexcept;
 
         void addElement(int element);
 
@@ -74,7 +109,8 @@ namespace ariel {
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
 
-    public:
+        // Inner classes
+
 
         /**
          * @class Abstract class representing iterators over the MagicalContainer's elements.
@@ -91,9 +127,13 @@ namespace ariel {
 
             Iterator(Iterator const &_other);
 
-            ~Iterator();
+            Iterator(Iterator &&_other) noexcept;
+
+            virtual ~Iterator();
 
             Iterator &operator=(const Iterator &_other);
+
+            Iterator &operator=(Iterator &&_other) noexcept;
 
             /**
              * @return Reference to the iterator pointing to the first element of the container.
@@ -107,8 +147,9 @@ namespace ariel {
 
             /**
              * @brief Dereference operator.
+             * @return the int value of this element.
              */
-            Iterator &operator*() const;
+            int operator*() const;
 
             /**
              * @brief Pre-increment operator (++i).
@@ -174,13 +215,17 @@ namespace ariel {
         public:
             AscendingIterator();
 
-            explicit AscendingIterator(MagicalContainer _container);
+            explicit AscendingIterator(const MagicalContainer &_container);
 
             AscendingIterator(AscendingIterator const &_other);
 
-            ~AscendingIterator();
+            AscendingIterator(AscendingIterator &&_other) noexcept;
+
+            ~AscendingIterator() override;
 
             AscendingIterator &operator=(const AscendingIterator &_other);
+
+            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
             Iterator &begin() override;
 
@@ -248,8 +293,6 @@ namespace ariel {
          * .
          */
         class SideCrossIterator : public Iterator {
-        private:
-            vector<MagicalContainer> &container;
 
         public:
             SideCrossIterator();
@@ -258,9 +301,13 @@ namespace ariel {
 
             SideCrossIterator(SideCrossIterator const &_other);
 
-            ~SideCrossIterator();
+            SideCrossIterator(SideCrossIterator &&_other) noexcept;
+
+            ~SideCrossIterator() override;
 
             SideCrossIterator &operator=(const SideCrossIterator &_other);
+
+            SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
 
             Iterator &begin() override;
 
@@ -324,13 +371,17 @@ namespace ariel {
         public:
             PrimeIterator();
 
-            explicit PrimeIterator(MagicalContainer _container);
+            explicit PrimeIterator(const MagicalContainer &_container);
 
             PrimeIterator(PrimeIterator const &_other);
 
-            ~PrimeIterator();
+            PrimeIterator(PrimeIterator &&_other) noexcept;
+
+            ~PrimeIterator() override;
 
             PrimeIterator &operator=(const PrimeIterator &_other);
+
+            PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
 
             Iterator &begin() override;
 

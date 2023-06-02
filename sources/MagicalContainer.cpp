@@ -32,6 +32,22 @@ namespace ariel {
             _location(-1),
             next_prime(-1) {}
 
+    MagicalContainer::MagicalNode::MagicalNode(const MagicalContainer::MagicalNode &_other) {}
+
+    MagicalContainer::MagicalNode::MagicalNode(MagicalContainer::MagicalNode &&_other) noexcept {}
+
+    MagicalContainer::MagicalNode::~MagicalNode() = default;
+
+    MagicalContainer::MagicalNode &
+    MagicalContainer::MagicalNode::operator=(const MagicalContainer::MagicalNode &_other) {
+        return *this;
+    }
+
+    MagicalContainer::MagicalNode &
+    MagicalContainer::MagicalNode::operator=(MagicalContainer::MagicalNode &&_other) noexcept {
+        return *this;
+    }
+
     bool operator>(const MagicalContainer::MagicalNode &_node1, const MagicalContainer::MagicalNode &_node2) {
         return _node1._value > _node2._value;
     }
@@ -66,6 +82,8 @@ namespace ariel {
             container(vector<MagicalNode *>(_other.container)),
             first_prime(_other.first_prime) {}
 
+    MagicalContainer::MagicalContainer(MagicalContainer &&_other) noexcept {}
+
     MagicalContainer::~MagicalContainer() {
         for (auto obj: this->container) {
             delete obj;
@@ -73,6 +91,10 @@ namespace ariel {
     }
 
     MagicalContainer &MagicalContainer::operator=(const MagicalContainer &_other) {
+        return *this;
+    }
+
+    MagicalContainer &MagicalContainer::operator=(MagicalContainer &&_other) noexcept {
         return *this;
     }
 
