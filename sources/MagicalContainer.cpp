@@ -118,12 +118,12 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
-        for (auto obj: this->container) {
-            if (obj->getValue() == element) {
-                throw std::runtime_error("RUNTIME ERROR: Container already contains this element!");
-                return;
-            }
-        }
+//        for (auto obj: this->magical_container) {
+//            if (obj->getValue() == element) {
+//                throw std::runtime_error("RUNTIME ERROR: Container already contains this element!");
+//                return;
+//            }
+//        }
         MagicalNode new_element(element);
         this->container.push_back(&new_element);
         std::sort(this->container.begin(), this->container.end());
@@ -156,6 +156,61 @@ namespace ariel {
         }
         output << "}";
         return output;
+    }
+
+
+    MagicalContainer::Iterator::Iterator(MagicalContainer &_container) :
+            magical_container(_container),
+            _index(0),
+            curr_element(nullptr) {}
+
+    MagicalContainer::Iterator::Iterator(MagicalContainer &_container, long index) :
+            magical_container(_container),
+            _index(index) {
+        if (index < 0) {
+            throw std::invalid_argument("INVALID ARGUMENT: Index must be >= 0!\n");
+        }
+        this->curr_element = _container.container.at(static_cast<unsigned long>(index));
+    }
+
+    MagicalContainer::Iterator MagicalContainer::Iterator::begin() {
+        return Iterator(this->magical_container, 0);
+    }
+
+    MagicalContainer::Iterator MagicalContainer::Iterator::end() {
+        return Iterator(this->magical_container, this->magical_container.size() - 1);
+    }
+
+    int MagicalContainer::Iterator::operator*() const {
+        return this->curr_element->getValue();
+    }
+
+    MagicalContainer::Iterator &MagicalContainer::Iterator::operator++() {
+        ++this->_index;
+        this->curr_element = this->magical_container.container.at(static_cast<unsigned long>(this->_index));
+        return *this;
+    }
+
+    bool operator==(const MagicalContainer::Iterator &_iter1, const MagicalContainer::Iterator &_iter2) {
+        return _iter1.curr_element->getValue() == _iter2.curr_element->getValue();
+    }
+
+    bool operator!=(const MagicalContainer::Iterator &_iter1, const MagicalContainer::Iterator &_iter2) {
+        return _iter1.curr_element->getValue() != _iter2.curr_element->getValue();
+    }
+
+    bool operator>(const MagicalContainer::Iterator &_iter1, const MagicalContainer::Iterator &_iter2) {
+        return _iter1.curr_element->getValue() > _iter2.curr_element->getValue();
+
+    }
+
+    bool operator<(const MagicalContainer::Iterator &_iter1, const MagicalContainer::Iterator &_iter2) {
+        return _iter1.curr_element->getValue() < _iter2.curr_element->getValue();
+
+    }
+
+    std::ostream &operator<<(ostream &output, MagicalContainer::Iterator &_other) {
+        return output << _other.curr_element->getValue();
     }
 
 

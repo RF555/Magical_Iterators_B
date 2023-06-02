@@ -65,7 +65,7 @@ TEST_CASE("AscendingIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty container") {
+    SUBCASE("Iterating over an empty magical_container") {
         MagicalContainer emptyContainer;
         MagicalContainer::AscendingIterator it(emptyContainer);
         CHECK(it == it.end());
@@ -93,7 +93,7 @@ TEST_CASE("SideCrossIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty container") {
+    SUBCASE("Iterating over an empty magical_container") {
         MagicalContainer emptyContainer;
         MagicalContainer::SideCrossIterator it(emptyContainer);
         CHECK(it == it.end());
@@ -121,15 +121,15 @@ TEST_CASE("PrimeIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty container") {
+    SUBCASE("Iterating over an empty magical_container") {
         MagicalContainer emptyContainer;
         MagicalContainer::PrimeIterator it(emptyContainer);
         CHECK(it == it.end());
     }
 }
 //--------------------------------------------------------------
-// Test case for comparing iterators from the same container
-TEST_CASE("Comparing iterators from the same container") {
+// Test case for comparing iterators from the same magical_container
+TEST_CASE("Comparing iterators from the same magical_container") {
     MagicalContainer container;
     for (int i = 1; i <= 10; ++i) {
         container.addElement(i * 10);
@@ -530,7 +530,7 @@ TEST_CASE("AscendingIterator with Negative and Positive Numbers") {
     }
 }
 
-// Test case for the PrimeIterator with no prime numbers in the container
+// Test case for the PrimeIterator with no prime numbers in the magical_container
 TEST_CASE("PrimeIterator with No Prime Numbers") {
     MagicalContainer container;
     container.addElement(4);
@@ -548,7 +548,7 @@ TEST_CASE("PrimeIterator with No Prime Numbers") {
     }
 }
 
-// Test case for the SideCrossIterator with a single element in the container
+// Test case for the SideCrossIterator with a single element in the magical_container
 TEST_CASE("SideCrossIterator with Single Element") {
     MagicalContainer container;
     container.addElement(100);

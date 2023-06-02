@@ -119,31 +119,25 @@ namespace ariel {
          */
         class Iterator {
         private:
+            MagicalContainer &magical_container;
+            long _index;
+            MagicalNode *curr_element;
 
         public:
-            Iterator();
 
-            explicit Iterator(const MagicalContainer& _container);
+            explicit Iterator(MagicalContainer &_container);
 
-            Iterator(Iterator const &_other);
-
-            Iterator(Iterator &&_other) noexcept;
-
-            virtual ~Iterator();
-
-            Iterator &operator=(const Iterator &_other);
-
-            Iterator &operator=(Iterator &&_other) noexcept;
+            explicit Iterator(MagicalContainer &_container, long index);
 
             /**
-             * @return Reference to the iterator pointing to the first element of the container.
+             * @return Reference to the iterator pointing to the first element of the magical_container.
              */
-            virtual Iterator &begin();
+            virtual Iterator begin();
 
             /**
-             * @return Reference to the iterator pointing to the last element of the container.
+             * @return Reference to the iterator pointing to the last element of the magical_container.
              */
-            virtual Iterator &end();
+            virtual Iterator end();
 
             /**
              * @brief Dereference operator.
@@ -213,23 +207,16 @@ namespace ariel {
         private:
 
         public:
-            AscendingIterator();
 
             explicit AscendingIterator(const MagicalContainer &_container);
-
-            AscendingIterator(AscendingIterator const &_other);
-
-            AscendingIterator(AscendingIterator &&_other) noexcept;
-
-            ~AscendingIterator() override;
 
             AscendingIterator &operator=(const AscendingIterator &_other);
 
             AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
-            Iterator &begin() override;
+            Iterator begin() override;
 
-            Iterator &end() override;
+            Iterator end() override;
 
             Iterator &operator++() override;
 
@@ -295,23 +282,16 @@ namespace ariel {
         class SideCrossIterator : public Iterator {
 
         public:
-            SideCrossIterator();
 
             explicit SideCrossIterator(MagicalContainer &_container);
-
-            SideCrossIterator(SideCrossIterator const &_other);
-
-            SideCrossIterator(SideCrossIterator &&_other) noexcept;
-
-            ~SideCrossIterator() override;
 
             SideCrossIterator &operator=(const SideCrossIterator &_other);
 
             SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
 
-            Iterator &begin() override;
+            Iterator begin() override;
 
-            Iterator &end() override;
+            Iterator end() override;
 
             Iterator &operator++() override;
 
@@ -369,23 +349,16 @@ namespace ariel {
         private:
 
         public:
-            PrimeIterator();
 
             explicit PrimeIterator(const MagicalContainer &_container);
-
-            PrimeIterator(PrimeIterator const &_other);
-
-            PrimeIterator(PrimeIterator &&_other) noexcept;
-
-            ~PrimeIterator() override;
 
             PrimeIterator &operator=(const PrimeIterator &_other);
 
             PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
 
-            Iterator &begin() override;
+            Iterator begin() override;
 
-            Iterator &end() override;
+            Iterator end() override;
 
             Iterator &operator++() override;
 
