@@ -87,7 +87,7 @@ namespace ariel {
         public:
             Iterator();
 
-            Iterator(MagicalContainer _container);
+            explicit Iterator(MagicalContainer _container);
 
             Iterator(Iterator const &_other);
 
@@ -174,7 +174,7 @@ namespace ariel {
         public:
             AscendingIterator();
 
-            AscendingIterator(MagicalContainer _container);
+            explicit AscendingIterator(MagicalContainer _container);
 
             AscendingIterator(AscendingIterator const &_other);
 
@@ -254,7 +254,7 @@ namespace ariel {
         public:
             SideCrossIterator();
 
-            SideCrossIterator(MagicalContainer &_container);
+            explicit SideCrossIterator(MagicalContainer &_container);
 
             SideCrossIterator(SideCrossIterator const &_other);
 
@@ -324,7 +324,7 @@ namespace ariel {
         public:
             PrimeIterator();
 
-            PrimeIterator(MagicalContainer _container);
+            explicit PrimeIterator(MagicalContainer _container);
 
             PrimeIterator(PrimeIterator const &_other);
 
