@@ -123,7 +123,7 @@ namespace ariel {
         public:
             Iterator();
 
-            explicit Iterator(MagicalContainer _container);
+            explicit Iterator(const MagicalContainer& _container);
 
             Iterator(Iterator const &_other);
 
