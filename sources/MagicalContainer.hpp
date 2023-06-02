@@ -74,7 +74,7 @@ namespace ariel {
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
 
-    private:
+    public:
 
         /**
          * @class Abstract class representing iterators over the MagicalContainer's elements.
@@ -164,8 +164,6 @@ namespace ariel {
             friend std::ostream &operator<<(ostream &output, Iterator &_other);
 
         };
-
-    public:
 
         /**
          * @details Iterating over the elements by ascending order (low value to high value).
