@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+//#include <vector>
 #include <set>
 #include <algorithm>
 #include <cmath>
@@ -16,6 +16,9 @@ namespace ariel {
     bool isPrime(int num);
 
     class MagicalContainer {
+        /************************************
+         ****** MagicalContainer class ******
+         ************************************/
     private:
 //        vector<int> ascending_vector;
 //        vector<int> cross_vector;
@@ -50,7 +53,113 @@ namespace ariel {
 
     private:
         void updateCross();
+
+        /************************************
+         ********** Iterator class **********
+         ************************************/
+    public:
+
+        enum IterType {
+            PURE_ITER = -1,
+            ASCENDING_ITER = 0,
+            CROSS_ITER = 1,
+            PRIME_ITER = 2
+        };
+
+        /**
+         * @class Inner interface representing iterators over the MagicalContainer's elements.
+         * @details each implementation of this class would traversal over the elements in a different order.
+         */
+        class Iterator {
+        public:
+
+            Iterator() = default;
+
+            /**
+             * @brief Copy constructor.
+             * @param _other Iterator instance to copy.
+             */
+            Iterator(const Iterator &_other) = default;
+
+            /**
+             * @brief Move constructor.
+             * @param _other Iterator instance to move.
+             */
+            Iterator(Iterator &&_other) = default;
+
+            virtual ~Iterator() = default;
+
+            /**
+             * @brief Copy assignment operator.
+             * @param _other Iterator instance to copy.
+             */
+            Iterator &operator=(const Iterator &_other) = default;
+
+            /**
+             * @brief Move assignment operator.
+             * @param _other Iterator instance to move.
+             */
+            Iterator &operator=(Iterator &&_other) = default;
+
+            /**
+             * @brief Equality Iterator comparison.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return True - if both iterators are of the same instance: container, index and element value.\n False - else.
+             * @details Both objects must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             */
+            friend bool operator==(const Iterator &_iter1, const Iterator &_iter2) = 0;
+
+            /**
+             * @brief Inequality Iterator comparison.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return False - if both iterators are of the same instance: container, index and element value.\n True - else.
+             * @details Both objects must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             */
+            friend bool operator!=(const Iterator &_iter1, const Iterator &_iter2) = 0;
+
+            /**
+             * @brief GT Iterator comparison operator.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return True - if the index of _iter1 is grater then the index of _iter2.\n False - else.
+             * @details Both objects must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             */
+            friend bool operator>(const Iterator &_iter1, const Iterator &_iter2) = 0;
+
+            /**
+             * @brief LT Iterator comparison operator.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return True - if the index of _iter1 is lower then the index of _iter2.\n False - else.
+             * @details Both objects must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             */
+            friend bool operator<(const Iterator &_iter1, const Iterator &_iter2) = 0;
+        };
+
+
     };
 
 }
 #endif // MAGICAL_CONTAINER_HPP
+
+
+
+
+
+
+
+
+
+
+
+
