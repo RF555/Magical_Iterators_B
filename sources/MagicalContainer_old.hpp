@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <typeinfo>
+
 
 using namespace std;
 
@@ -18,10 +20,10 @@ namespace ariel {
 
         private:
 
-            int _value{};
-            bool _prime{};
-            long _location{};
-            long next_prime{};
+            int _value;
+            bool _prime;
+            long _index;
+            long next_prime;
 
         public:
 
@@ -31,14 +33,14 @@ namespace ariel {
 
             bool isPrime() const;
 
-            long getLocation() const;
+            long getIndex() const;
 
             long getNextPrime() const;
 
 
             // Setters
 
-            void setLocation(long location);
+            void setIndex(long location);
 
             void setNextPrime(long nextPrime);
 
@@ -73,9 +75,9 @@ namespace ariel {
         static bool is_prime(int num);
 
 
-        /**
-         * MagicalContainer
-         */
+        /*****************************************************
+         ***************** MagicalContainer ******************
+         *****************************************************/
 
     private:
 
@@ -106,38 +108,63 @@ namespace ariel {
 
         void removeElement(int element);
 
+        MagicalNode *at(long index);
+
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
 
-        // Inner classes
+        /*****************************************************
+         ******************* Inner classes *******************
+         *****************************************************/
 
 
         /**
-         * @class Abstract class representing iterators over the MagicalContainer's elements.
-         * @details Iterator going over the elements by ascending order (low value to high value).
+         * @class Inner class representing iterators over the MagicalContainer's elements.
          * @details each implementation of this class would traversal over the elements in a different order.
+         * @details AscendingIterator going over the elements by ascending order (low value to high value).
          */
-        class Iterator {
+        class AscendingIterator {
         private:
             MagicalContainer &magical_container;
-            long _index;
             MagicalNode *curr_element;
+
+        protected:
+
+            void setMagicalContainer(MagicalContainer &magicalContainer);
+
+            void setCurrElement(MagicalNode *currElement);
+
+            MagicalContainer &getMagicalContainer() const;
+
+            MagicalNode *getCurrElement() const;
+
+            long getIndex() const;
 
         public:
 
-            explicit Iterator(MagicalContainer &_container);
+            explicit AscendingIterator(MagicalContainer &_container);
 
-            explicit Iterator(MagicalContainer &_container, long index);
+            explicit AscendingIterator(MagicalContainer &_container, long index);
+
+            AscendingIterator(const AscendingIterator &_other);
+
+            AscendingIterator(AscendingIterator &&_other) noexcept;
+
+            ~AscendingIterator();
+
+            AscendingIterator &operator=(const AscendingIterator &_other);
+
+            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
             /**
              * @return Reference to the iterator pointing to the first element of the magical_container.
              */
-            virtual Iterator begin();
+            AscendingIterator begin();
 
             /**
              * @return Reference to the iterator pointing to the last element of the magical_container.
              */
-            virtual Iterator end();
+            AscendingIterator end();
 
             /**
              * @brief Dereference operator.
@@ -148,124 +175,58 @@ namespace ariel {
             /**
              * @brief Pre-increment operator (++i).
              */
-            virtual Iterator &operator++();
+            AscendingIterator &operator++();
 
             /**
              * @brief Equality comparison.
-             * @param _iter1 Reference to this Iterator.
-             * @param _iter2 Reference to the compared Iterator.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
              * @return True - if both _iter1 and _iter2 point to the same object.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of Iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of iterator.
              */
-            friend bool operator==(const Iterator &_iter1, const Iterator &_iter2);
+            friend bool operator==(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 
             /**
              * @brief Equality comparison.
-             * @param _iter1 Reference to this AscendingIterator.
-             * @param _iter2 Reference to the compared AscendingIterator.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
              * @return False - if both _iter1 and _iter2 point to the same object.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of Iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of iterator.
              */
-            friend bool operator!=(const Iterator &_iter1, const Iterator &_iter2);
+            friend bool operator!=(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 
             /**
              * @brief GT comparison operator.
-             * @param _iter1 Reference to this AscendingIterator.
-             * @param _iter2 Reference to the compared AscendingIterator.
-             * @return True - if the location of _iter1 is grater then the location of _iter2. False - else.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return True - if the location of _iter1 is grater then the location of _iter2.\n False - else.
              * @details Both objects must be of the same type.
-             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type AscendingIterator.
+             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type iterator.
              */
-            friend bool operator>(const Iterator &_iter1, const Iterator &_iter2);
+            friend bool operator>(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 
             /**
              * @brief LT comparison operator.
-             * @param _iter1 Reference to this AscendingIterator.
-             * @param _iter2 Reference to the compared AscendingIterator.
-             * @return True - if the location of _iter1 is lower then the location of _iter2. False - else.
+             * @param _iter1 Reference to this iterator.
+             * @param _iter2 Reference to the compared iterator.
+             * @return True - if the location of _iter1 is lower then the location of _iter2.\n False - else.
              * @details Both objects must be of the same type.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of Iterator.
+             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implementation type of iterator.
              */
-            friend bool operator<(const Iterator &_iter1, const Iterator &_iter2);
+            friend bool operator<(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 
 
-//            bool operator!() const;
-//
-//            friend bool operator>=(const Iterator &_iter1, const Iterator &_iter2);
-//
-//            friend bool operator<=(const Iterator &_iter1, const Iterator &_iter2);
-
-
-            friend std::ostream &operator<<(ostream &output, Iterator &_other);
-
-        };
-
-        /**
-         * @details Iterating over the elements by ascending order (low value to high value).
-         */
-        class AscendingIterator : public Iterator {
-        private:
-
-        public:
-
-            explicit AscendingIterator(const MagicalContainer &_container);
-
-            AscendingIterator &operator=(const AscendingIterator &_other);
-
-            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
-
-            Iterator begin() override;
-
-            Iterator end() override;
-
-            Iterator &operator++() override;
-
-//
-//            /**
-//             * @brief Equality comparison.
-//             * @param _iter1 Reference to this AscendingIterator.
-//             * @param _iter2 Reference to the compared AscendingIterator.
-//             * @return True - if both _iter1 and _iter2 point to the same object.
-//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type AscendingIterator.
-//             */
-//            friend bool operator==(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
-//
-//            /**
-//             * @brief Equality comparison.
-//             * @param _iter1 Reference to this AscendingIterator.
-//             * @param _iter2 Reference to the compared AscendingIterator.
-//             * @return False - if both _iter1 and _iter2 point to the same object.
-//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type AscendingIterator.
-//             */
-//            friend bool operator!=(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
-//
-//            /**
-//             * @brief GT comparison operator.
-//             * @param _iter1 Reference to this AscendingIterator.
-//             * @param _iter2 Reference to the compared AscendingIterator.
-//             * @return True - if the location of _iter1 is grater then the location of _iter2. False - else.
-//             * @details Both objects must be of the same type.
-//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type AscendingIterator.
-//             */
-//            friend bool operator>(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
-//
-//            /**
-//             * @brief LT comparison operator.
-//             * @param _iter1 Reference to this AscendingIterator.
-//             * @param _iter2 Reference to the compared AscendingIterator.
-//             * @return True - if the location of _iter1 is lower than the location of _iter2. False - else.
-//             * @details Both objects must be of the same type.
-//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type AscendingIterator.
-//             */
-//            friend bool operator<(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
-//
 //            bool operator!() const;
 //
 //            friend bool operator>=(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 //
 //            friend bool operator<=(const AscendingIterator &_iter1, const AscendingIterator &_iter2);
 
+
+            friend std::ostream &operator<<(ostream &output, AscendingIterator &_other);
+
         };
+
 
         /**
          * @details Iterating over the elements in cross order.
@@ -279,21 +240,52 @@ namespace ariel {
          * .\n
          * .
          */
-        class SideCrossIterator : public Iterator {
+        class SideCrossIterator {
+        private:
+            MagicalContainer &magical_container;
+            MagicalNode *curr_ascending;
+            MagicalNode *curr_descending;
+
+
+        protected:
+            MagicalContainer &getMagicalContainer() const;
+
+            void setMagicalContainer(MagicalContainer &magicalContainer);
+
+            MagicalNode *getCurrAscending() const;
+
+            void setCurrAscending(MagicalNode *currAscending);
+
+            MagicalNode *getCurrDescending() const;
+
+            void setCurrDescending(MagicalNode *currDescending);
+
+            long getAscendingIndex();
+
+            long getDescendingIndex();
 
         public:
 
             explicit SideCrossIterator(MagicalContainer &_container);
 
+            explicit SideCrossIterator(MagicalContainer &_container, long index);
+
+            SideCrossIterator(const SideCrossIterator &_other);
+
+            SideCrossIterator(SideCrossIterator &&_other) noexcept;
+
+            ~SideCrossIterator();
+
+
             SideCrossIterator &operator=(const SideCrossIterator &_other);
 
             SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
 
-            Iterator begin() override;
+            SideCrossIterator begin();
 
-            Iterator end() override;
+            SideCrossIterator end();
 
-            Iterator &operator++() override;
+            SideCrossIterator &operator++();
 
 //
 //            /**
@@ -318,7 +310,7 @@ namespace ariel {
 //             * @brief GT comparison operator.
 //             * @param _iter1 Reference to this SideCrossIterator.
 //             * @param _iter2 Reference to the compared SideCrossIterator.
-//             * @return True - if the location of _iter1 is grater then the location of _iter2. False - else.
+//             * @return True - if the location of _iter1 is grater then the location of _iter2.\n False - else.
 //             * @details Both objects must be of the same type.
 //             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type SideCrossIterator.
 //             */
@@ -328,7 +320,7 @@ namespace ariel {
 //             * @brief LT comparison operator.
 //             * @param _iter1 Reference to this SideCrossIterator.
 //             * @param _iter2 Reference to the compared SideCrossIterator.
-//             * @return True - if the location of _iter1 is lower than the location of _iter2. False - else.
+//             * @return True - if the location of _iter1 is lower than the location of _iter2.\n False - else.
 //             * @details Both objects must be of the same type.
 //             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type SideCrossIterator.
 //             */
@@ -345,7 +337,7 @@ namespace ariel {
         /**
          * @details Iterating over only the elements with prime value, by ascending order (low value to high value).
          */
-        class PrimeIterator : public Iterator {
+        class PrimeIterator  {
         private:
 
         public:
@@ -356,11 +348,11 @@ namespace ariel {
 
             PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
 
-            Iterator begin() override;
+            AscendingIterator begin() ;
 
-            Iterator end() override;
+            AscendingIterator end() ;
 
-            Iterator &operator++() override;
+            AscendingIterator &operator++() ;
 
 //
 //            /**
@@ -385,7 +377,7 @@ namespace ariel {
 //             * @brief GT comparison operator.
 //             * @param _iter1 Reference to this PrimeIterator.
 //             * @param _iter2 Reference to the compared PrimeIterator.
-//             * @return True - if the location of _iter1 is grater then the location of _iter2. False - else.
+//             * @return True - if the location of _iter1 is grater then the location of _iter2.\n False - else.
 //             * @details Both objects must be of the same type.
 //             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type PrimeIterator.
 //             */
@@ -395,7 +387,7 @@ namespace ariel {
 //             * @brief LT comparison operator.
 //             * @param _iter1 Reference to this PrimeIterator.
 //             * @param _iter2 Reference to the compared PrimeIterator.
-//             * @return True - if the location of _iter1 is lower than the location of _iter2. False - else.
+//             * @return True - if the location of _iter1 is lower than the location of _iter2.\n False - else.
 //             * @details Both objects must be of the same type.
 //             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type PrimeIterator.
 //             */
@@ -406,6 +398,74 @@ namespace ariel {
 //            friend bool operator>=(const PrimeIterator &_iter1, const PrimeIterator &_iter2);
 //
 //            friend bool operator<=(const PrimeIterator &_iter1, const PrimeIterator &_iter2);
+
+        };
+
+
+        /**
+         * @details Iterating over the elements by ascending order (low value to high value).
+         */
+        class _F_AscendingIterator : public AscendingIterator {
+        private:
+
+        public:
+
+            explicit _F_AscendingIterator(const MagicalContainer &_container);
+
+            _F_AscendingIterator &operator=(const _F_AscendingIterator &_other);
+
+            _F_AscendingIterator &operator=(_F_AscendingIterator &&_other) noexcept;
+
+            AscendingIterator begin() override;
+
+            AscendingIterator end() override;
+
+            AscendingIterator &operator++() override;
+
+//
+//            /**
+//             * @brief Equality comparison.
+//             * @param _iter1 Reference to this _F_AscendingIterator.
+//             * @param _iter2 Reference to the compared _F_AscendingIterator.
+//             * @return True - if both _iter1 and _iter2 point to the same object.
+//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type _F_AscendingIterator.
+//             */
+//            friend bool operator==(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
+//
+//            /**
+//             * @brief Equality comparison.
+//             * @param _iter1 Reference to this _F_AscendingIterator.
+//             * @param _iter2 Reference to the compared _F_AscendingIterator.
+//             * @return False - if both _iter1 and _iter2 point to the same object.
+//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type _F_AscendingIterator.
+//             */
+//            friend bool operator!=(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
+//
+//            /**
+//             * @brief GT comparison operator.
+//             * @param _iter1 Reference to this _F_AscendingIterator.
+//             * @param _iter2 Reference to the compared _F_AscendingIterator.
+//             * @return True - if the location of _iter1 is grater then the location of _iter2.\n False - else.
+//             * @details Both objects must be of the same type.
+//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type _F_AscendingIterator.
+//             */
+//            friend bool operator>(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
+//
+//            /**
+//             * @brief LT comparison operator.
+//             * @param _iter1 Reference to this _F_AscendingIterator.
+//             * @param _iter2 Reference to the compared _F_AscendingIterator.
+//             * @return True - if the location of _iter1 is lower than the location of _iter2.\n False - else.
+//             * @details Both objects must be of the same type.
+//             * @throws std::invalid_argument If either _iter1 OR _iter2 are not of type _F_AscendingIterator.
+//             */
+//            friend bool operator<(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
+//
+//            bool operator!() const;
+//
+//            friend bool operator>=(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
+//
+//            friend bool operator<=(const _F_AscendingIterator &_iter1, const _F_AscendingIterator &_iter2);
 
         };
 
