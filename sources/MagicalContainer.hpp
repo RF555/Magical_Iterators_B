@@ -18,6 +18,8 @@ namespace ariel {
         vector<int> cross_container;
         vector<int> prime_container;
 
+    public:
+
         MagicalContainer();
 
         MagicalContainer(const MagicalContainer &_other);
