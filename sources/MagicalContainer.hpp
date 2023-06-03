@@ -71,9 +71,18 @@ namespace ariel {
          * @details each implementation of this class would traversal over the elements in a different order.
          */
         class Iterator {
-        public:
+        private:
+            /**
+             * @brief Represents the implementation type of the Iterator.
+             */
+            static IterType _type;
 
-            Iterator() = default;
+        public:
+            Iterator() :
+                    _type(PURE_ITER) {}
+
+            Iterator(IterType my_type) :
+                    _type(my_type) {}
 
             /**
              * @brief Copy constructor.
@@ -109,7 +118,7 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator==(const Iterator& _other) const = 0;
+            virtual bool operator==(const Iterator &_other) const = 0;
 
             /**
              * @brief Inequality Iterator comparison.
@@ -140,6 +149,24 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
             virtual bool operator<(const Iterator &_other) = 0;
+        };
+
+
+
+        /************************************
+         ********* Iterator classes *********
+         ************************************/
+
+
+
+        /**
+         * @class Inner class representing iterators over the MagicalContainer's elements.
+         * @implements Iterator.
+         * @details AscendingIterator going over the elements by ascending order (low value to high value).
+         */
+        class AscendingIterator : public Iterator {
+        private:
+
         };
 
 
