@@ -12,6 +12,8 @@
 using namespace std;
 
 namespace ariel {
+    bool isPrime(int num);
+
     class MagicalContainer {
     private:
         vector<int> ascending_container;
@@ -39,6 +41,9 @@ namespace ariel {
         void removeElement(int element);
 
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
+
+    private:
+        void updateCross();
     };
 
 }

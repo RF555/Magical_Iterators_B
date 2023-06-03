@@ -11,7 +11,6 @@
 
 using namespace std;
 
-namespace ariel {
     class MagicalContainer {
 
 
@@ -471,5 +470,5 @@ namespace ariel {
 
     };
 
-}
+
 #endif // MAGICAL_CONTAINER_OLD_HPP
