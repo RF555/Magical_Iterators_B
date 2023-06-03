@@ -55,7 +55,7 @@ namespace ariel {
         void updateCross();
 
         /************************************
-         ********** Iterator class **********
+         ********* Iterator classes *********
          ************************************/
     public:
 
@@ -103,47 +103,43 @@ namespace ariel {
 
             /**
              * @brief Equality Iterator comparison.
-             * @param _iter1 Reference to this iterator.
-             * @param _iter2 Reference to the compared iterator.
-             * @return True - if both iterators are of the same instance: container, index and element value.\n False - else.
-             * @details Both objects must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             * @param _other Reference to the compared iterator.
+             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            friend bool operator==(const Iterator &_iter1, const Iterator &_iter2) = 0;
+            virtual bool operator==(const Iterator& _other) const = 0;
 
             /**
              * @brief Inequality Iterator comparison.
-             * @param _iter1 Reference to this iterator.
-             * @param _iter2 Reference to the compared iterator.
-             * @return False - if both iterators are of the same instance: container, index and element value.\n True - else.
-             * @details Both objects must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             * @param _other Reference to the compared iterator.
+             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            friend bool operator!=(const Iterator &_iter1, const Iterator &_iter2) = 0;
+            virtual bool operator!=(const Iterator &_other) = 0;
 
             /**
              * @brief GT Iterator comparison operator.
-             * @param _iter1 Reference to this iterator.
-             * @param _iter2 Reference to the compared iterator.
-             * @return True - if the index of _iter1 is grater then the index of _iter2.\n False - else.
-             * @details Both objects must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            friend bool operator>(const Iterator &_iter1, const Iterator &_iter2) = 0;
+            virtual bool operator>(const Iterator &_other) = 0;
 
             /**
              * @brief LT Iterator comparison operator.
-             * @param _iter1 Reference to this iterator.
-             * @param _iter2 Reference to the compared iterator.
-             * @return True - if the index of _iter1 is lower then the index of _iter2.\n False - else.
-             * @details Both objects must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If _iter1 and _iter2 are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If _iter1 and _iter2 don't traversal the same container.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            friend bool operator<(const Iterator &_iter1, const Iterator &_iter2) = 0;
+            virtual bool operator<(const Iterator &_other) = 0;
         };
 
 
