@@ -26,11 +26,7 @@ namespace ariel {
          ************************************/
     private:
         set<int> og_set;
-//        vector<int> ascending_vector;
         vector<int> cross_vector;
-//        vector<int> prime_vector;
-//        set<int> ascending_set;
-//        set<int> cross_set;
         set<int> prime_set;
 
 
@@ -131,20 +127,20 @@ namespace ariel {
             /**
              * @brief Equality Iterator comparison.
              * @param _other Reference to the compared iterator.
-             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
+             * @return True - if both iterators are of the same instance (container and index).\n False - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator==(const Iterator &_other) const = 0;
 
             /**
              * @brief Inequality Iterator comparison.
              * @param _other Reference to the compared iterator.
-             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
+             * @return False - if both iterators are of the same instance (container and index).\n True - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator!=(const Iterator &_other) const = 0;
 
@@ -163,8 +159,8 @@ namespace ariel {
              * @param _other Reference to the compared iterator.
              * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator<(const Iterator &_other) const = 0;
 
@@ -192,9 +188,12 @@ namespace ariel {
         private:
             MagicalContainer &_container;
             long _index;
+            set<int>::iterator _curr_iter;
+
+            AscendingIterator(MagicalContainer &container, long index);
 
         public:
-            AscendingIterator(MagicalContainer &container);
+            explicit AscendingIterator(MagicalContainer &container);
 
             AscendingIterator(const AscendingIterator &_other);
 
@@ -214,8 +213,8 @@ namespace ariel {
              * @param _other Reference to the compared iterator.
              * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator==(const AscendingIterator &_other) const;
 
@@ -224,8 +223,8 @@ namespace ariel {
              * @param _other Reference to the compared iterator.
              * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator!=(const AscendingIterator &_other) const;
 
@@ -234,8 +233,8 @@ namespace ariel {
              * @param _other Reference to the compared iterator.
              * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator>(const AscendingIterator &_other) const;
 
@@ -244,8 +243,8 @@ namespace ariel {
              * @param _other Reference to the compared iterator.
              * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
              * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
-             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
              */
             virtual bool operator<(const AscendingIterator &_other) const;
 
@@ -267,12 +266,26 @@ namespace ariel {
 
             /**
              * @brief Pre-increment operator (++i).
+             * @throws std::runtime_error If this is the last element.
              */
             AscendingIterator &operator++();
 
             friend std::ostream &operator<<(ostream &output, AscendingIterator &_other);
-        };
 
+
+            // Iterator functions:
+
+            /**
+             * @return Reference to the iterator pointing to the first element of the magical_container.
+             */
+            AscendingIterator begin();
+
+            /**
+             * @return Reference to the iterator pointing to the last element of the magical_container.
+             */
+            AscendingIterator end();
+
+        };
 
 
     };
