@@ -289,6 +289,18 @@ namespace ariel {
 
         // SideCrossIterator:
 
+        /**
+         * @details Iterating over the elements in cross order.
+         * @details i.e. crossing from low value to high value elements:\n
+         * 1. Lowest value element\n
+         * 2. Highest value element\n
+         * 3. Second lowest value element\n
+         * 4. Second highest value element\n
+         * 5. Third lowest value element\n
+         * .\n
+         * .\n
+         * .
+         */
         class SideCrossIterator : public Iterator {
 
         private:
@@ -393,6 +405,112 @@ namespace ariel {
             SideCrossIterator end();
         };
 
+        /**
+         * @details Iterating over only the elements with prime value, by ascending order (low value to high value).
+         */
+        class PrimeIterator : public Iterator {
+
+        private:
+            MagicalContainer &_container;
+            long _index;
+            set<int>::iterator _curr_iter;
+
+            PrimeIterator(MagicalContainer &container, long index);
+
+        public:
+
+            explicit PrimeIterator(MagicalContainer &container);
+
+            PrimeIterator(const PrimeIterator &_other);
+
+            PrimeIterator(PrimeIterator &&_other) noexcept;
+
+            ~PrimeIterator() override;
+
+            PrimeIterator &operator=(const PrimeIterator &_other);
+
+            PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
+
+
+            // Boolean operations:
+
+            /**
+             * @brief Equality PrimeIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            bool operator==(const PrimeIterator &_other) const;
+
+            /**
+             * @brief Inequality PrimeIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            bool operator!=(const PrimeIterator &_other) const;
+
+            /**
+             * @brief GT PrimeIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            bool operator>(const PrimeIterator &_other) const;
+
+            /**
+             * @brief LT PrimeIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            bool operator<(const PrimeIterator &_other) const;
+
+
+            // Overriding Iterator operations:
+
+            bool operator==(const Iterator &_other) const override;
+
+            bool operator!=(const Iterator &_other) const override;
+
+            bool operator>(const Iterator &_other) const override;
+
+            bool operator<(const Iterator &_other) const override;
+
+            int operator*() const override;
+
+
+            // Other operators:
+
+            /**
+             * @brief Pre-increment operator (++i).
+             * @throws std::runtime_error If this is the last element.
+             */
+            PrimeIterator &operator++();
+
+            friend std::ostream &operator<<(ostream &output, PrimeIterator &_other);
+
+
+            // Iterator functions:
+
+            /**
+             * @return Reference to the iterator pointing to the first element of the magical_container.
+             */
+            PrimeIterator begin();
+
+            /**
+             * @return Reference to the iterator pointing to the last element of the magical_container.
+             */
+            PrimeIterator end();
+        };
 
     };
 
