@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 #include <algorithm>
 #include <cmath>
 #include <typeinfo>
@@ -16,9 +17,14 @@ namespace ariel {
 
     class MagicalContainer {
     private:
-        vector<int> ascending_container;
-        vector<int> cross_container;
-        vector<int> prime_container;
+//        vector<int> ascending_vector;
+//        vector<int> cross_vector;
+//        vector<int> prime_vector;
+        set<int> og_set;
+        set<int> ascending_set;
+        set<int> cross_set;
+        set<int> prime_set;
+
 
     public:
 

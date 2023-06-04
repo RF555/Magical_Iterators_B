@@ -27,9 +27,9 @@ namespace ariel {
     MagicalContainer::MagicalContainer() {}
 
     MagicalContainer::MagicalContainer(const ariel::MagicalContainer &_other)
-            : ascending_container(vector<int>(_other.ascending_container)),
-              cross_container(vector<int>(_other.cross_container)),
-              prime_container(vector<int>(_other.prime_container)) {}
+            : ascending_vector(vector<int>(_other.ascending_vector)),
+              cross_vector(vector<int>(_other.cross_vector)),
+              prime_vector(vector<int>(_other.prime_vector)) {}
 
     MagicalContainer::MagicalContainer(ariel::MagicalContainer &&_other) noexcept {}
 
@@ -44,32 +44,32 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
-        this->ascending_container.push_back(element);
-        std::sort(this->ascending_container.begin(), this->ascending_container.end());
+        this->ascending_vector.push_back(element);
+        std::sort(this->ascending_vector.begin(), this->ascending_vector.end());
 
-        this->cross_container.push_back(element);
+        this->cross_vector.push_back(element);
         updateCross();
 
         if (isPrime(element)) {
-            this->prime_container.push_back(element);
-            std::sort(this->prime_container.begin(), this->prime_container.end());
+            this->prime_vector.push_back(element);
+            std::sort(this->prime_vector.begin(), this->prime_vector.end());
         }
     }
 
     long MagicalContainer::size() const {
-        return static_cast<long>(this->ascending_container.size());
+        return static_cast<long>(this->ascending_vector.size());
     }
 
     void MagicalContainer::removeElement(int element) {
-        std::remove(this->ascending_container.begin(), this->ascending_container.end(), element);
-        std::remove(this->cross_container.begin(), this->cross_container.end(), element);
-        std::remove(this->prime_container.begin(), this->prime_container.end(), element);
+        std::remove(this->ascending_vector.begin(), this->ascending_vector.end(), element);
+        std::remove(this->cross_vector.begin(), this->cross_vector.end(), element);
+        std::remove(this->prime_vector.begin(), this->prime_vector.end(), element);
 
     }
 
     std::ostream &operator<<(ostream &output, MagicalContainer &_other) {
         output << "{ ";
-        for (auto element: _other.ascending_container) {
+        for (auto element: _other.ascending_vector) {
             output << element << " ";
         }
         output << "}";
