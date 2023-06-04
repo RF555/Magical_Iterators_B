@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-//#include <vector>
+#include <vector>
 #include <set>
 #include <algorithm>
 #include <cmath>
@@ -13,6 +13,11 @@
 using namespace std;
 
 namespace ariel {
+    /**
+     * @brief Primality test for a number.
+     * @param num Number to test.
+     * @return True - if num is indeed prime.\n False - else.
+     */
     bool isPrime(int num);
 
     class MagicalContainer {
@@ -20,12 +25,12 @@ namespace ariel {
          ****** MagicalContainer class ******
          ************************************/
     private:
-//        vector<int> ascending_vector;
-//        vector<int> cross_vector;
-//        vector<int> prime_vector;
         set<int> og_set;
-        set<int> ascending_set;
-        set<int> cross_set;
+//        vector<int> ascending_vector;
+        vector<int> cross_vector;
+//        vector<int> prime_vector;
+//        set<int> ascending_set;
+//        set<int> cross_set;
         set<int> prime_set;
 
 
@@ -52,6 +57,9 @@ namespace ariel {
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
     private:
+        /**
+         * @brief Update the cross_vector.
+         */
         void updateCross();
 
 
