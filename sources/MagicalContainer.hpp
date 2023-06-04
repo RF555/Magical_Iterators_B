@@ -77,6 +77,9 @@ namespace ariel {
              */
             IterType _type;
 
+        protected:
+            IterType getType() const { return _type; }
+
         public:
             Iterator() :
                     _type(PURE_ITER) {}
