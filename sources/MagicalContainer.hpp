@@ -54,9 +54,13 @@ namespace ariel {
     private:
         void updateCross();
 
+
+
         /************************************
          ********* Iterator classes *********
          ************************************/
+
+
     public:
 
         enum IterType {
@@ -113,6 +117,9 @@ namespace ariel {
              */
             Iterator &operator=(Iterator &&_other) = default;
 
+
+            // Boolean operations:
+
             /**
              * @brief Equality Iterator comparison.
              * @param _other Reference to the compared iterator.
@@ -131,7 +138,7 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator!=(const Iterator &_other) = 0;
+            virtual bool operator!=(const Iterator &_other) const = 0;
 
             /**
              * @brief GT Iterator comparison operator.
@@ -141,7 +148,7 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator>(const Iterator &_other) = 0;
+            virtual bool operator>(const Iterator &_other) const = 0;
 
             /**
              * @brief LT Iterator comparison operator.
@@ -151,15 +158,21 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator<(const Iterator &_other) = 0;
+            virtual bool operator<(const Iterator &_other) const = 0;
+
+            // Other operators:
+
+            /**
+             * @brief Dereference operator.
+             * @return The int value of this element.
+             */
+            virtual int operator*() const = 0;
+
         };
 
 
 
-        /************************************
-         ********* Iterator classes *********
-         ************************************/
-
+        // AscendingIterator:
 
 
         /**
@@ -169,8 +182,89 @@ namespace ariel {
          */
         class AscendingIterator : public Iterator {
         private:
+            MagicalContainer &_container;
+            long _index;
 
+        public:
+            AscendingIterator(MagicalContainer &container);
+
+            AscendingIterator(const AscendingIterator &_other);
+
+            AscendingIterator(AscendingIterator &&_other) noexcept;
+
+            ~AscendingIterator() override;
+
+            AscendingIterator &operator=(const AscendingIterator &_other);
+
+            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
+
+
+            // Boolean operations:
+
+            /**
+             * @brief Equality AscendingIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             */
+            virtual bool operator==(const AscendingIterator &_other) const;
+
+            /**
+             * @brief Inequality AscendingIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             */
+            virtual bool operator!=(const AscendingIterator &_other) const;
+
+            /**
+             * @brief GT AscendingIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             */
+            virtual bool operator>(const AscendingIterator &_other) const;
+
+            /**
+             * @brief LT AscendingIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
+             * @throws std::invalid_argument If both iterators don't traversal the same container.
+             */
+            virtual bool operator<(const AscendingIterator &_other) const;
+
+
+            // Overriding Iterator operations:
+
+            bool operator==(const Iterator &_other) const override;
+
+            bool operator!=(const Iterator &_other) const override;
+
+            bool operator>(const Iterator &_other) const override;
+
+            bool operator<(const Iterator &_other) const override;
+
+            int operator*() const override;
+
+
+            // Other operators:
+
+            /**
+             * @brief Pre-increment operator (++i).
+             */
+            AscendingIterator &operator++();
+
+            friend std::ostream &operator<<(ostream &output, AscendingIterator &_other);
         };
+
 
 
     };
