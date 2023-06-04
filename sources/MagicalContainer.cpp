@@ -99,6 +99,11 @@ namespace ariel {
     }
 
 
+
+
+    // AscendingIterator
+
+
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container) :
             Iterator(ASCENDING_ITER),
             _container(container),
@@ -119,9 +124,10 @@ namespace ariel {
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer::AscendingIterator &&_other) noexcept:
             Iterator(_other.getType()),
             _container(_other._container),
-            _index(_other._index) {}
+            _index(_other._index),
+            _curr_iter(_other._curr_iter) {}
 
-    MagicalContainer::AscendingIterator::~AscendingIterator() {}
+    MagicalContainer::AscendingIterator::~AscendingIterator() = default;
 
     MagicalContainer::AscendingIterator &
     MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &_other) {
@@ -250,6 +256,7 @@ namespace ariel {
     }
 
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container, long index) :
+            Iterator(this->getType()),
             _container(container),
             _index(index) {
         this->_curr_iter = container.og_set.begin();
@@ -265,6 +272,39 @@ namespace ariel {
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() {
         return {this->_container, this->_container.size()};
     }
+
+
+
+
+
+
+
+    // SideCrossIterator
+
+    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container) :
+            Iterator(CROSS_ITER),
+            _container(container),
+            _index(0) {
+        this->_curr_iter = container.cross_vector.begin();
+    }
+
+    MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &_other) :
+            Iterator(_other.getType()),
+            _container(_other._container),
+            _index(0),
+            _curr_iter(_other._curr_iter) {
+        if (&this->_container != &_other._container) {
+            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+        }
+    }
+
+    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer::SideCrossIterator &&_other) noexcept:
+            Iterator(_other.getType()),
+            _container(_other._container),
+            _index(_other._index),
+            _curr_iter(_other._curr_iter) {}
+
+    MagicalContainer::SideCrossIterator::~SideCrossIterator() = default;
 
 
 }

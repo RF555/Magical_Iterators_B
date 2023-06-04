@@ -284,7 +284,113 @@ namespace ariel {
              * @return Reference to the iterator pointing to the last element of the magical_container.
              */
             AscendingIterator end();
+        };
 
+
+        // SideCrossIterator:
+
+        class SideCrossIterator : public Iterator {
+
+        private:
+            MagicalContainer &_container;
+            long _index;
+            vector<int>::iterator _curr_iter;
+
+            SideCrossIterator(MagicalContainer &container, long index);
+
+        public:
+
+            explicit SideCrossIterator(MagicalContainer &container);
+
+            SideCrossIterator(const SideCrossIterator &_other);
+
+            SideCrossIterator(SideCrossIterator &&_other) noexcept;
+
+            ~SideCrossIterator() override;
+
+            SideCrossIterator &operator=(const SideCrossIterator &_other);
+
+            SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
+
+
+            // Boolean operations:
+
+            /**
+             * @brief Equality SideCrossIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            virtual bool operator==(const SideCrossIterator &_other) const;
+
+            /**
+             * @brief Inequality SideCrossIterator comparison.
+             * @param _other Reference to the compared iterator.
+             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            virtual bool operator!=(const SideCrossIterator &_other) const;
+
+            /**
+             * @brief GT SideCrossIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            virtual bool operator>(const SideCrossIterator &_other) const;
+
+            /**
+             * @brief LT SideCrossIterator comparison operator.
+             * @param _other Reference to the compared iterator.
+             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
+             * @details Both iterators must be of the same type and traversal over the same container.
+             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
+             * @throws std::runtime_error If both iterators don't traversal the same container.
+             */
+            virtual bool operator<(const SideCrossIterator &_other) const;
+
+
+            // Overriding Iterator operations:
+
+            bool operator==(const Iterator &_other) const override;
+
+            bool operator!=(const Iterator &_other) const override;
+
+            bool operator>(const Iterator &_other) const override;
+
+            bool operator<(const Iterator &_other) const override;
+
+            int operator*() const override;
+
+
+            // Other operators:
+
+            /**
+             * @brief Pre-increment operator (++i).
+             * @throws std::runtime_error If this is the last element.
+             */
+            SideCrossIterator &operator++();
+
+            friend std::ostream &operator<<(ostream &output, SideCrossIterator &_other);
+
+
+            // Iterator functions:
+
+            /**
+             * @return Reference to the iterator pointing to the first element of the magical_container.
+             */
+            SideCrossIterator begin();
+
+            /**
+             * @return Reference to the iterator pointing to the last element of the magical_container.
+             */
+            SideCrossIterator end();
         };
 
 
