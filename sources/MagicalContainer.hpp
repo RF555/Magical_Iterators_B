@@ -75,13 +75,13 @@ namespace ariel {
             /**
              * @brief Represents the implementation type of the Iterator.
              */
-            static IterType _type;
+            IterType _type;
 
         public:
             Iterator() :
                     _type(PURE_ITER) {}
 
-            Iterator(IterType my_type) :
+            explicit Iterator(IterType my_type) :
                     _type(my_type) {}
 
             /**
