@@ -83,7 +83,7 @@ namespace ariel {
 
 
         protected:
-            Iterator(MagicalContainer &container, vector<int> &vec, unsigned long index);
+            Iterator(Iterator &_other, unsigned long index);
 
             vector<int> &getVecPtr() const;
 
@@ -217,9 +217,10 @@ namespace ariel {
          * @details AscendingIterator going over the elements by ascending order (low value to high value).
          */
         class AscendingIterator : public Iterator {
+
         private:
 
-            AscendingIterator(MagicalContainer &container, unsigned long index);
+            AscendingIterator(AscendingIterator &_other, unsigned long index);
 
         public:
             explicit AscendingIterator(MagicalContainer &container);

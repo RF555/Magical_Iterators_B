@@ -149,16 +149,16 @@ namespace ariel {
         _curr_iter = currIter;
     }
 
-    MagicalContainer::Iterator::Iterator(MagicalContainer &container, vector<int> &vec, unsigned long index) :
-            _container(container),
+    MagicalContainer::Iterator::Iterator(Iterator &_other, unsigned long index) :
+            _container(_other._container),
             _index(index),
-            _vec_ptr(vec) {
-        if (index == vec.size() - 1) {
-            this->_curr_iter = vec.end();
+            _vec_ptr(_other._vec_ptr) {
+        if (index == _other._vec_ptr.size() - 1) {
+            this->_curr_iter = _other._vec_ptr.end();
         } else if (index == 0) {
-            this->_curr_iter = vec.begin();
+            this->_curr_iter = _other._vec_ptr.begin();
         } else {
-            this->_curr_iter = vec.begin();
+            this->_curr_iter = _other._vec_ptr.begin();
             for (int i = 0; i < index; ++i) {
                 ++this->_curr_iter;
             }
@@ -166,11 +166,11 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator MagicalContainer::Iterator::begin() {
-        return {this->_container, this->_vec_ptr, 0};
+        return {*this, 0};
     }
 
     MagicalContainer::Iterator MagicalContainer::Iterator::end() {
-        return {this->_container, this->_vec_ptr, this->_vec_ptr.size()};
+        return {*this, this->_vec_ptr.size()};
     }
 
 }

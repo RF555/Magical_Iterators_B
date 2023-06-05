@@ -105,8 +105,8 @@ namespace ariel {
         }
     }
 
-    long MagicalContainer::size() const {
-        return static_cast<long>(this->og_set.size());
+    unsigned long MagicalContainer::size() const {
+        return this->og_set.size();
     }
 
     std::ostream &operator<<(ostream &output, MagicalContainer &_other) {
