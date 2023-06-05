@@ -28,13 +28,8 @@ namespace ariel {
 
     MagicalContainer::AscendingIterator &
     MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &_other) {
-        if (this != &_other) {
-            if (&this->getContainer() != &_other.getContainer()) {
-                throw std::runtime_error("RUNTIME ERROR: have of the same container!\n");
-            }
-            this->setIndex(_other.getIndex());
-            this->setElement(_other.getElement());
-        }
+        this->Iterator::operator=(_other);
+        this->_curr_iter = _other._curr_iter;
         return *this;
     }
 
