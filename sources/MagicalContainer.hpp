@@ -216,7 +216,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-             bool operator==(const AscendingIterator &_other) const;
+            bool operator==(const AscendingIterator &_other) const;
 
             /**
              * @brief Inequality AscendingIterator comparison.
@@ -226,7 +226,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-             bool operator!=(const AscendingIterator &_other) const;
+            bool operator!=(const AscendingIterator &_other) const;
 
             /**
              * @brief GT AscendingIterator comparison operator.
@@ -236,7 +236,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-             bool operator>(const AscendingIterator &_other) const;
+            bool operator>(const AscendingIterator &_other) const;
 
             /**
              * @brief LT AscendingIterator comparison operator.
@@ -246,7 +246,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-             bool operator<(const AscendingIterator &_other) const;
+            bool operator<(const AscendingIterator &_other) const;
 
 
             // Overriding Iterator operations:
