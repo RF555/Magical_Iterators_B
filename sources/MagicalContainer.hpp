@@ -83,6 +83,13 @@ namespace ariel {
 
 
         protected:
+            vector<int> *getVecPtr() const;
+
+            void setVecPtr(vector<int> *vecPtr);
+
+            const vector<int>::iterator &getCurrIter() const;
+
+            void setCurrIter(const vector<int>::iterator &currIter);
 
             MagicalContainer &getContainer() const;
 
@@ -198,7 +205,6 @@ namespace ariel {
          */
         class AscendingIterator : public Iterator {
         private:
-            set<int>::iterator _curr_iter;
 
             AscendingIterator(MagicalContainer &container, long index);
 

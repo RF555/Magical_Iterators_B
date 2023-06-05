@@ -133,4 +133,20 @@ namespace ariel {
         this->_index = index;
     }
 
+    vector<int> *MagicalContainer::Iterator::getVecPtr() const {
+        return _vec_ptr;
+    }
+
+    void MagicalContainer::Iterator::setVecPtr(vector<int> *vecPtr) {
+        _vec_ptr = vecPtr;
+    }
+
+    const vector<int>::iterator &MagicalContainer::Iterator::getCurrIter() const {
+        return _curr_iter;
+    }
+
+    void MagicalContainer::Iterator::setCurrIter(const vector<int>::iterator &currIter) {
+        _curr_iter = currIter;
+    }
+
 }
