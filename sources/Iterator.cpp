@@ -6,13 +6,18 @@ using namespace std;
 
 namespace ariel {
 
-    MagicalContainer::Iterator::Iterator(ariel::MagicalContainer &my_container) :
+    MagicalContainer::Iterator::Iterator(ariel::MagicalContainer &my_container, vector<int> *vec) :
             _container(my_container),
-            _index(0) {}
+            _index(0),
+            _vec_ptr(vec) {
+        this->_curr_iter = vec->begin();
+    }
 
     MagicalContainer::Iterator::Iterator(const ariel::MagicalContainer::Iterator &_other) :
             _container(_other._container),
-            _index(_other._index) {
+            _index(_other._index),
+            _vec_ptr(_other._vec_ptr),
+            _curr_iter(_other._curr_iter) {
         if (typeid(this) != typeid(_other)) {
             throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
         }
@@ -20,7 +25,9 @@ namespace ariel {
 
     MagicalContainer::Iterator::Iterator(ariel::MagicalContainer::Iterator &&_other) noexcept:
             _container(_other._container),
-            _index(_other._index) {}
+            _index(_other._index),
+            _vec_ptr(_other._vec_ptr),
+            _curr_iter(_other._curr_iter) {}
 
     MagicalContainer::Iterator::~Iterator() = default;
 
@@ -33,7 +40,8 @@ namespace ariel {
                 throw std::runtime_error("RUNTIME ERROR: have of the same container!\n");
             }
             this->_index = _other._index;
-            this->_element = _other._element;
+            this->_vec_ptr = _other._vec_ptr;
+            this->_curr_iter = _other._curr_iter;
         }
         return *this;
     }
@@ -42,7 +50,8 @@ namespace ariel {
         if (this != &_other) {
             this->_container = _other._container;
             this->_index = _other._index;
-            this->_element = _other._element;
+            this->_vec_ptr = _other._vec_ptr;
+            this->_curr_iter = _other._curr_iter;
         }
         return *this;
     }
@@ -54,7 +63,7 @@ namespace ariel {
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
-        return this->_element == _other._element;
+        return *this->_curr_iter == *_other._curr_iter;
     }
 
     bool MagicalContainer::Iterator::operator!=(const MagicalContainer::Iterator &_other) const {
@@ -64,7 +73,7 @@ namespace ariel {
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
-        return this->_element != _other._element;
+        return *this->_curr_iter != *_other._curr_iter;
     }
 
     bool MagicalContainer::Iterator::operator>(const MagicalContainer::Iterator &_other) const {
@@ -88,15 +97,16 @@ namespace ariel {
     }
 
     std::ostream &operator<<(ostream &output, MagicalContainer::Iterator &_other) {
-        return output << _other._element;
+        return output << *_other._curr_iter;
     }
 
     int MagicalContainer::Iterator::operator*() const {
-        return this->_element;
+        return *this->_curr_iter;
     }
 
     MagicalContainer::Iterator &MagicalContainer::Iterator::operator++() {
         ++this->_index;
+        ++this->_curr_iter;
         return *this;
     }
 
@@ -108,15 +118,11 @@ namespace ariel {
     }
 
     void MagicalContainer::Iterator::setContainer(MagicalContainer &container) {
-        _container = container;
+        this->_container = container;
     }
 
     int MagicalContainer::Iterator::getElement() const {
-        return _element;
-    }
-
-    void MagicalContainer::Iterator::setElement(int element) {
-        _element = element;
+        return *this->_curr_iter;
     }
 
     long MagicalContainer::Iterator::getIndex() const {
@@ -124,7 +130,7 @@ namespace ariel {
     }
 
     void MagicalContainer::Iterator::setIndex(long index) {
-        _index = index;
+        this->_index = index;
     }
 
 }

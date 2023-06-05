@@ -77,8 +77,8 @@ namespace ariel {
         class Iterator {
         private:
             MagicalContainer &_container;
-//            int _element;
             long _index;
+            vector<int> *_vec_ptr;
             vector<int>::iterator _curr_iter;
 
 
@@ -90,15 +90,13 @@ namespace ariel {
 
             int getElement() const;
 
-            void setElement(int element);
-
             long getIndex() const;
 
             void setIndex(long index);
 
         public:
 
-            explicit Iterator(MagicalContainer &my_container);
+            explicit Iterator(MagicalContainer &my_container, vector<int> *vec);
 
             /**
              * @brief Copy constructor.
