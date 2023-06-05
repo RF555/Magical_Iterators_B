@@ -2,21 +2,57 @@
 #include "sources/MagicalContainer.hpp"
 
 using namespace ariel;
+
 int main() {
     // Create a MagicalContainer and add some elements
-    MagicalContainer container;
-    container.addElement(17);
-    container.addElement(2);
-    container.addElement(25);
-    container.addElement(9);
-    container.addElement(3);
+    MagicalContainer my_container;
+    cout << "my_container: " << my_container <<"\t\t\t\tsize: " << my_container.size() << "\n\n";
 
-    // Print container size
-    std::cout << "Size of container: " << container.size() << std::endl;
+    cout << "add 17" << "\n";
+    my_container.addElement(17);
+    cout << "my_container: " << my_container <<"\t\t\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 2" << "\n";
+    my_container.addElement(2);
+    cout << "my_container: " << my_container <<"\t\t\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 25" << "\n";
+    my_container.addElement(25);
+    cout << "my_container: " << my_container <<"\t\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 9" << "\n";
+    my_container.addElement(9);
+    cout << "my_container: " << my_container <<"\t\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 3" << "\n";
+    my_container.addElement(3);
+    cout << "my_container: " << my_container <<"\t\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add -2" << "\n";
+    my_container.addElement(-2);
+    cout << "my_container: " << my_container <<"\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 122" << "\n";
+    my_container.addElement(122);
+    cout << "my_container: " << my_container <<"\t\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add -13" << "\n";
+    my_container.addElement(-13);
+    cout << "my_container: " << my_container <<"\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 44" << "\n";
+    my_container.addElement(44);
+    cout << "my_container: " << my_container <<"\tsize: " << my_container.size() << "\n\n";
+
+    cout << "add 26" << "\n";
+    my_container.addElement(26);
+    cout << "my_container: " << my_container <<"\tsize: " << my_container.size() << "\n\n";
+
+
 
     // Use AscendingIterator to display elements in ascending order
     std::cout << "Elements in ascending order:\n";
-    MagicalContainer::AscendingIterator ascIter(container);
+    MagicalContainer::AscendingIterator ascIter(my_container);
     for (auto it = ascIter.begin(); it != ascIter.end(); ++it) {
         std::cout << *it << ' ';   // 2 3 9 17 25
     }
@@ -24,7 +60,7 @@ int main() {
 
     // Use DescendingIterator to display elements in descending order
     std::cout << "Elements in cross order:\n";
-    MagicalContainer::SideCrossIterator crossIter(container);
+    MagicalContainer::SideCrossIterator crossIter(my_container);
     for (auto it = crossIter.begin(); it != crossIter.end(); ++it) {
         std::cout << *it << ' ';  // 2 25 3 17 9
     }
@@ -32,15 +68,15 @@ int main() {
 
     // Use PrimeIterator to display prime numbers only
     std::cout << "Prime numbers:\n";
-    MagicalContainer::PrimeIterator primeIter(container);
+    MagicalContainer::PrimeIterator primeIter(my_container);
     for (auto it = primeIter.begin(); it != primeIter.end(); ++it) {
         std::cout << *it << ' ';  // 2 3 17 
     }
     std::cout << std::endl;
 
-    // Remove an element from the container and display the size
-    container.removeElement(9);
-    std::cout << "Size of container after removing an element: " << container.size() << std::endl;
+    // Remove an element from the my_container and display the size
+    my_container.removeElement(9);
+    std::cout << "Size of my_container after removing an element: " << my_container.size() << std::endl;
 
     return 0;
 }
