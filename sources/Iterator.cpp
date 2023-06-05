@@ -91,5 +91,24 @@ namespace ariel {
         return output << _other._element;
     }
 
+    MagicalContainer &MagicalContainer::Iterator::getContainer() const {
+        return _container;
+    }
+
+    int MagicalContainer::Iterator::getElement() const {
+        return _element;
+    }
+
+    void MagicalContainer::Iterator::setElement(int element) {
+        _element = element;
+    }
+
+    long MagicalContainer::Iterator::getIndex() const {
+        return _index;
+    }
+
+    void MagicalContainer::Iterator::setIndex(long index) {
+        _index = index;
+    }
 
 }

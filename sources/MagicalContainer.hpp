@@ -75,6 +75,18 @@ namespace ariel {
             int _element;
             long _index;
 
+        protected:
+
+            MagicalContainer &getContainer() const;
+
+            int getElement() const;
+
+            void setElement(int element);
+
+            long getIndex() const;
+
+            void setIndex(long index);
+
         public:
 
             explicit Iterator(MagicalContainer &my_container);
@@ -179,8 +191,6 @@ namespace ariel {
          */
         class AscendingIterator : public Iterator {
         private:
-            MagicalContainer &_container;
-            long _index;
             set<int>::iterator _curr_iter;
 
             AscendingIterator(MagicalContainer &container, long index);
