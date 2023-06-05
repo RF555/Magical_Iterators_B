@@ -45,7 +45,7 @@ namespace ariel {
 
         void addElement(int element);
 
-        long size() const;
+        unsigned long size() const;
 
         void removeElement(int element);
 
@@ -77,15 +77,17 @@ namespace ariel {
         class Iterator {
         private:
             MagicalContainer &_container;
-            long _index;
-            vector<int> *_vec_ptr;
+            unsigned long _index;
+            vector<int> &_vec_ptr;
             vector<int>::iterator _curr_iter;
 
 
         protected:
-            vector<int> *getVecPtr() const;
+            Iterator(MagicalContainer &container, vector<int> &vec, unsigned long index);
 
-            void setVecPtr(vector<int> *vecPtr);
+            vector<int> &getVecPtr() const;
+
+            void setVecPtr(vector<int> &vecPtr);
 
             const vector<int>::iterator &getCurrIter() const;
 
@@ -97,13 +99,13 @@ namespace ariel {
 
             int getElement() const;
 
-            long getIndex() const;
+            unsigned long getIndex() const;
 
-            void setIndex(long index);
+            void setIndex(unsigned long index);
 
         public:
 
-            explicit Iterator(MagicalContainer &my_container, vector<int> *vec);
+            explicit Iterator(MagicalContainer &my_container, vector<int> &vec);
 
             /**
              * @brief Copy constructor.
@@ -186,10 +188,21 @@ namespace ariel {
              * @brief Pre-increment operator (++i).
              * @throws std::runtime_error If this is the last element.
              */
-            virtual Iterator &operator++();
+            Iterator &operator++();
 
             friend std::ostream &operator<<(ostream &output, Iterator &_other);
 
+            // Iterator functions:
+
+            /**
+            * @return Reference to the iterator pointing to the first element of the magical_container.
+            */
+            virtual Iterator begin();
+
+            /**
+            * @return Reference to the iterator pointing to the last element of the magical_container.
+            */
+            virtual Iterator end();
 
         };
 
@@ -206,7 +219,7 @@ namespace ariel {
         class AscendingIterator : public Iterator {
         private:
 
-            AscendingIterator(MagicalContainer &container, long index);
+            AscendingIterator(MagicalContainer &container, unsigned long index);
 
         public:
             explicit AscendingIterator(MagicalContainer &container);
@@ -221,26 +234,12 @@ namespace ariel {
 
             AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
-            // Override operator:
 
-            /**
-             * @brief Pre-increment operator (++i).
-             * @throws std::runtime_error If this is the last element.
-             */
-            Iterator &operator++() override;
+            // Override functions:
 
+            Iterator begin() override;
 
-            // Iterator functions:
-
-            /**
-             * @return Reference to the iterator pointing to the first element of the magical_container.
-             */
-            AscendingIterator begin();
-
-            /**
-             * @return Reference to the iterator pointing to the last element of the magical_container.
-             */
-            AscendingIterator end();
+            Iterator end() override;
         };
 
 
@@ -263,7 +262,7 @@ namespace ariel {
         private:
             vector<int>::iterator _curr_iter;
 
-            SideCrossIterator(MagicalContainer &container, long index);
+            SideCrossIterator(MagicalContainer &container, unsigned long index);
 
         public:
 
@@ -280,26 +279,11 @@ namespace ariel {
             SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
 
 
-            // Override operators:
+            // Override functions:
 
-            /**
-             * @brief Pre-increment operator (++i).
-             * @throws std::runtime_error If this is the last element.
-             */
-            Iterator &operator++() override;
+            Iterator begin() override;
 
-
-            // Iterator functions:
-
-            /**
-             * @return Reference to the iterator pointing to the first element of the magical_container.
-             */
-            SideCrossIterator begin();
-
-            /**
-             * @return Reference to the iterator pointing to the last element of the magical_container.
-             */
-            SideCrossIterator end();
+            Iterator end() override;
         };
 
 
@@ -315,7 +299,7 @@ namespace ariel {
         private:
             set<int>::iterator _curr_iter;
 
-            PrimeIterator(MagicalContainer &container, long index);
+            PrimeIterator(MagicalContainer &container, unsigned long index);
 
         public:
 

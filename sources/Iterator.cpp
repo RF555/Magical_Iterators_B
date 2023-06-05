@@ -6,11 +6,11 @@ using namespace std;
 
 namespace ariel {
 
-    MagicalContainer::Iterator::Iterator(ariel::MagicalContainer &my_container, vector<int> *vec) :
+    MagicalContainer::Iterator::Iterator(ariel::MagicalContainer &my_container, vector<int> &vec) :
             _container(my_container),
             _index(0),
             _vec_ptr(vec) {
-        this->_curr_iter = vec->begin();
+        this->_curr_iter = vec.begin();
     }
 
     MagicalContainer::Iterator::Iterator(const ariel::MagicalContainer::Iterator &_other) :
@@ -125,19 +125,19 @@ namespace ariel {
         return *this->_curr_iter;
     }
 
-    long MagicalContainer::Iterator::getIndex() const {
+    unsigned long MagicalContainer::Iterator::getIndex() const {
         return _index;
     }
 
-    void MagicalContainer::Iterator::setIndex(long index) {
+    void MagicalContainer::Iterator::setIndex(unsigned long index) {
         this->_index = index;
     }
 
-    vector<int> *MagicalContainer::Iterator::getVecPtr() const {
+    vector<int> &MagicalContainer::Iterator::getVecPtr() const {
         return _vec_ptr;
     }
 
-    void MagicalContainer::Iterator::setVecPtr(vector<int> *vecPtr) {
+    void MagicalContainer::Iterator::setVecPtr(vector<int> &vecPtr) {
         _vec_ptr = vecPtr;
     }
 
@@ -147,6 +147,30 @@ namespace ariel {
 
     void MagicalContainer::Iterator::setCurrIter(const vector<int>::iterator &currIter) {
         _curr_iter = currIter;
+    }
+
+    MagicalContainer::Iterator::Iterator(MagicalContainer &container, vector<int> &vec, unsigned long index) :
+            _container(container),
+            _index(index),
+            _vec_ptr(vec) {
+        if (index == vec.size() - 1) {
+            this->_curr_iter = vec.end();
+        } else if (index == 0) {
+            this->_curr_iter = vec.begin();
+        } else {
+            this->_curr_iter = vec.begin();
+            for (int i = 0; i < index; ++i) {
+                ++this->_curr_iter;
+            }
+        }
+    }
+
+    MagicalContainer::Iterator MagicalContainer::Iterator::begin() {
+        return {this->_container, this->_vec_ptr, 0};
+    }
+
+    MagicalContainer::Iterator MagicalContainer::Iterator::end() {
+        return {this->_container, this->_vec_ptr, this->_vec_ptr.size()};
     }
 
 }
