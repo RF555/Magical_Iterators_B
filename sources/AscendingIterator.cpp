@@ -1,7 +1,5 @@
 #include "MagicalContainer.hpp"
 
-#include <typeinfo>
-
 using namespace std;
 
 namespace ariel {
