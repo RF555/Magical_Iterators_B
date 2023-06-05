@@ -60,6 +60,7 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
+        DEBUG(1)
         bool exists = this->og_set.contains(element);
         this->og_set.insert(element);
         if (!exists) {
@@ -76,7 +77,10 @@ namespace ariel {
 
     void MagicalContainer::updateAscend() {
         this->ascend_vector.clear();
-        copy(this->og_set.begin(), this->og_set.end(), this->ascend_vector.begin());
+        for (auto it: this->og_set) {
+            this->ascend_vector.push_back(it);
+        }
+        printAscend();
     }
 
     void MagicalContainer::updateCross() {
@@ -116,6 +120,29 @@ namespace ariel {
         }
         output << "}";
         return output;
+    }
+
+    void MagicalContainer::printVector(vector<int> &_vec) {
+        cout<<"{ ";
+        for (auto element: _vec) {
+            cout << element << " ";
+        }
+        cout << "}\n";
+    }
+
+    void MagicalContainer::printAscend() {
+        cout<<"ascend_vector: ";
+        printVector(this->ascend_vector);
+    }
+
+    void MagicalContainer::printCross() {
+        cout<<"cross_vector: ";
+        printVector(this->cross_vector);
+    }
+
+    void MagicalContainer::printPrime() {
+        cout<<"prime_vector: ";
+        printVector(this->prime_vector);
     }
 
 
