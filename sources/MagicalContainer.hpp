@@ -278,7 +278,6 @@ namespace ariel {
             Iterator &operator++() override;
 
 
-
             // Iterator functions:
 
             /**
@@ -291,6 +290,11 @@ namespace ariel {
              */
             SideCrossIterator end();
         };
+
+
+
+        // PrimeIterator
+
 
         /**
          * @details Iterating over only the elements with prime value, by ascending order (low value to high value).
