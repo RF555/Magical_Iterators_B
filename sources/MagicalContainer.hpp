@@ -33,17 +33,13 @@ namespace ariel {
 
         MagicalContainer(const MagicalContainer &_other);
 
-        MagicalContainer(MagicalContainer &&_other)
-
-        noexcept;
+        MagicalContainer(MagicalContainer &&_other) noexcept;
 
         ~MagicalContainer();
 
         MagicalContainer &operator=(const MagicalContainer &_other);
 
-        MagicalContainer &operator=(MagicalContainer &&_other)
-
-        noexcept;
+        MagicalContainer &operator=(MagicalContainer &&_other) noexcept;
 
         void addElement(int element);
 
@@ -91,7 +87,7 @@ namespace ariel {
              * @brief Move constructor.
              * @param _other Iterator instance to move.
              */
-            Iterator(Iterator &&_other);
+            Iterator(Iterator &&_other) noexcept;
 
             virtual ~Iterator();
 
@@ -105,7 +101,7 @@ namespace ariel {
              * @brief Move assignment operator.
              * @param _other Iterator instance to move.
              */
-            Iterator &operator=(Iterator &&_other);
+            Iterator &operator=(Iterator &&_other) noexcept;
 
 
             // Boolean operations:
