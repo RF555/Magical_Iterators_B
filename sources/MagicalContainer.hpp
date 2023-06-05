@@ -297,9 +297,8 @@ namespace ariel {
         class PrimeIterator : public Iterator {
 
         private:
-            set<int>::iterator _curr_iter;
 
-            PrimeIterator(MagicalContainer &container, unsigned long index);
+            PrimeIterator(PrimeIterator &_other, unsigned long index);
 
         public:
 
@@ -316,84 +315,11 @@ namespace ariel {
             PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
 
 
-            // Boolean operations:
+            // Override functions:
 
-            /**
-             * @brief Equality PrimeIterator comparison.
-             * @param _other Reference to the compared iterator.
-             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator==(const PrimeIterator &_other) const;
+            Iterator begin() override;
 
-            /**
-             * @brief Inequality PrimeIterator comparison.
-             * @param _other Reference to the compared iterator.
-             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator!=(const PrimeIterator &_other) const;
-
-            /**
-             * @brief GT PrimeIterator comparison operator.
-             * @param _other Reference to the compared iterator.
-             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator>(const PrimeIterator &_other) const;
-
-            /**
-             * @brief LT PrimeIterator comparison operator.
-             * @param _other Reference to the compared iterator.
-             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator<(const PrimeIterator &_other) const;
-
-
-            // Overriding Iterator operations:
-
-            bool operator==(const Iterator &_other) const override;
-
-            bool operator!=(const Iterator &_other) const override;
-
-            bool operator>(const Iterator &_other) const override;
-
-            bool operator<(const Iterator &_other) const override;
-
-            int operator*() const override;
-
-
-            // Other operators:
-
-            /**
-             * @brief Pre-increment operator (++i).
-             * @throws std::runtime_error If this is the last element.
-             */
-            PrimeIterator &operator++();
-
-            friend std::ostream &operator<<(ostream &output, PrimeIterator &_other);
-
-
-            // Iterator functions:
-
-            /**
-             * @return Reference to the iterator pointing to the first element of the magical_container.
-             */
-            PrimeIterator begin();
-
-            /**
-             * @return Reference to the iterator pointing to the last element of the magical_container.
-             */
-            PrimeIterator end();
+            Iterator end() override;
         };
 
     };
