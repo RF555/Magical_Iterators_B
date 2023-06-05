@@ -1,4 +1,7 @@
 #include "MagicalContainer.hpp"
+#include <algorithm>
+#include <cmath>
+#include <typeinfo>
 
 namespace ariel {
 

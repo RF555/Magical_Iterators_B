@@ -5,9 +5,6 @@
 #include <string>
 #include <vector>
 #include <set>
-#include <algorithm>
-#include <cmath>
-#include <typeinfo>
 
 
 using namespace std;
