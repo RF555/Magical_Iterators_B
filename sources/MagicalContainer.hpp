@@ -79,6 +79,8 @@ namespace ariel {
 
             MagicalContainer &getContainer() const;
 
+            void setContainer(MagicalContainer &container);
+
             int getElement() const;
 
             void setElement(int element);

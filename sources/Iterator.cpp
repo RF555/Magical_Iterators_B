@@ -12,7 +12,7 @@ namespace ariel {
 
     MagicalContainer::Iterator::Iterator(const ariel::MagicalContainer::Iterator &_other) :
             _container(_other._container),
-            _index(0) {
+            _index(_other._index) {
         if (typeid(this) != typeid(_other)) {
             throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
         }
@@ -20,7 +20,7 @@ namespace ariel {
 
     MagicalContainer::Iterator::Iterator(ariel::MagicalContainer::Iterator &&_other) noexcept:
             _container(_other._container),
-            _index(0) {}
+            _index(_other._index) {}
 
     MagicalContainer::Iterator::~Iterator() = default;
 
@@ -102,6 +102,10 @@ namespace ariel {
 
     MagicalContainer &MagicalContainer::Iterator::getContainer() const {
         return _container;
+    }
+
+    void MagicalContainer::Iterator::setContainer(MagicalContainer &container) {
+        _container = container;
     }
 
     int MagicalContainer::Iterator::getElement() const {
