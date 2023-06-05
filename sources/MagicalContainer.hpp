@@ -24,8 +24,9 @@ namespace ariel {
          ************************************/
     private:
         set<int> og_set;
+        vector<int> ascend_vector;
         vector<int> cross_vector;
-        set<int> prime_set;
+        vector<int> prime_vector;
 
 
     public:
@@ -52,10 +53,14 @@ namespace ariel {
 
     private:
         /**
-         * @brief Update the cross_vector.
+         * @brief Update ascend_vector.
+         */
+        void updateAscend();
+
+        /**
+         * @brief Update cross_vector.
          */
         void updateCross();
-
 
 
         /************************************
@@ -72,8 +77,10 @@ namespace ariel {
         class Iterator {
         private:
             MagicalContainer &_container;
-            int _element;
+//            int _element;
             long _index;
+            vector<int>::iterator _curr_iter;
+
 
         protected:
 
@@ -302,8 +309,6 @@ namespace ariel {
         class PrimeIterator : public Iterator {
 
         private:
-            MagicalContainer &_container;
-            long _index;
             set<int>::iterator _curr_iter;
 
             PrimeIterator(MagicalContainer &container, long index);
@@ -314,17 +319,13 @@ namespace ariel {
 
             PrimeIterator(const PrimeIterator &_other);
 
-            PrimeIterator(PrimeIterator &&_other)
-
-            noexcept;
+            PrimeIterator(PrimeIterator &&_other) noexcept;
 
             ~PrimeIterator() override;
 
             PrimeIterator &operator=(const PrimeIterator &_other);
 
-            PrimeIterator &operator=(PrimeIterator &&_other)
-
-            noexcept;
+            PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
 
 
             // Boolean operations:
