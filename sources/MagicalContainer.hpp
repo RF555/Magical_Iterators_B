@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <iterator>
 
 
 using namespace std;
@@ -65,15 +66,16 @@ namespace ariel {
     public:
 
         /**
-         * @class Inner interface representing iterators over the MagicalContainer's elements.
+         * @class Interface representing iterators over the MagicalContainer's elements.
          * @details each implementation of this class would traversal over the elements in a different order.
          */
         class Iterator {
         private:
             MagicalContainer &_container;
+            int _element;
+            long _index;
 
         public:
-            Iterator();
 
             explicit Iterator(MagicalContainer &my_container);
 
@@ -114,7 +116,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator==(const Iterator &_other) const = 0;
+            virtual bool operator==(const Iterator &_other) const;
 
             /**
              * @brief Inequality Iterator comparison.
@@ -124,7 +126,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator!=(const Iterator &_other) const = 0;
+            virtual bool operator!=(const Iterator &_other) const;
 
             /**
              * @brief GT Iterator comparison operator.
@@ -134,7 +136,7 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator>(const Iterator &_other) const = 0;
+            virtual bool operator>(const Iterator &_other) const;
 
             /**
              * @brief LT Iterator comparison operator.
@@ -144,7 +146,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator<(const Iterator &_other) const = 0;
+            virtual bool operator<(const Iterator &_other) const;
 
             // Other operators:
 
@@ -154,18 +156,14 @@ namespace ariel {
              */
             virtual int operator*() const = 0;
 
-
-            // Iterator functions:
-
             /**
-             * @return Reference to the iterator pointing to the first element of the magical_container.
+             * @brief Pre-increment operator (++i).
+             * @throws std::runtime_error If this is the last element.
              */
-            virtual Iterator begin() = 0;
+            virtual Iterator &operator++() = 0;
 
-            /**
-             * @return Reference to the iterator pointing to the last element of the magical_container.
-             */
-            virtual Iterator end() = 0;
+            friend std::ostream &operator<<(ostream &output, Iterator &_other);
+
 
         };
 
@@ -192,17 +190,13 @@ namespace ariel {
 
             AscendingIterator(const AscendingIterator &_other);
 
-            AscendingIterator(AscendingIterator &&_other)
-
-            noexcept;
+            AscendingIterator(AscendingIterator &&_other) noexcept;
 
             ~AscendingIterator() override;
 
             AscendingIterator &operator=(const AscendingIterator &_other);
 
-            AscendingIterator &operator=(AscendingIterator &&_other)
-
-            noexcept;
+            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
 
             // Boolean operations:
