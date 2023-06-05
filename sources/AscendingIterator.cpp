@@ -49,10 +49,7 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator &MagicalContainer::AscendingIterator::operator++() {
-        if (this->getIndex() >= this->getContainer().size()) {
-            throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
-        }
-        ++*this;
+        this->Iterator::operator++();
         ++this->_curr_iter;
         this->setElement(*this->_curr_iter);
         return *this;
@@ -62,7 +59,7 @@ namespace ariel {
             Iterator(container) {
         this->_curr_iter = container.og_set.begin();
         for (int i = 0; i < index; ++i) {
-            ++*this;
+            this->Iterator::operator++();
             ++this->_curr_iter;
         }
         this->setElement(*this->_curr_iter);

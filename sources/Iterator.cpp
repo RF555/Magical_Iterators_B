@@ -101,6 +101,9 @@ namespace ariel {
     }
 
     MagicalContainer &MagicalContainer::Iterator::getContainer() const {
+        if (this->_index >= this->_container.size()) {
+            throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
+        }
         return _container;
     }
 
