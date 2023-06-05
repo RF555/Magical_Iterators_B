@@ -130,7 +130,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator==(const Iterator &_other) const;
+            bool operator==(const Iterator &_other) const;
 
             /**
              * @brief Inequality Iterator comparison.
@@ -140,7 +140,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator!=(const Iterator &_other) const;
+            bool operator!=(const Iterator &_other) const;
 
             /**
              * @brief GT Iterator comparison operator.
@@ -150,7 +150,7 @@ namespace ariel {
              * @throws std::invalid_argument If both iterators are not of the same implemented type of iterator.
              * @throws std::invalid_argument If both iterators don't traversal the same container.
              */
-            virtual bool operator>(const Iterator &_other) const;
+            bool operator>(const Iterator &_other) const;
 
             /**
              * @brief LT Iterator comparison operator.
@@ -160,7 +160,7 @@ namespace ariel {
              * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
              * @throws std::runtime_error If both iterators don't traversal the same container.
              */
-            virtual bool operator<(const Iterator &_other) const;
+            bool operator<(const Iterator &_other) const;
 
             // Other operators:
 
@@ -168,7 +168,7 @@ namespace ariel {
              * @brief Dereference operator.
              * @return The int value of this element.
              */
-            virtual int operator*() const;
+            int operator*() const;
 
             /**
              * @brief Pre-increment operator (++i).
@@ -210,72 +210,13 @@ namespace ariel {
 
             AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
 
-
-            // Boolean operations:
-
-            /**
-             * @brief Equality AscendingIterator comparison.
-             * @param _other Reference to the compared iterator.
-             * @return True - if both iterators are of the same instance (container, index and element value).\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator==(const AscendingIterator &_other) const;
-
-            /**
-             * @brief Inequality AscendingIterator comparison.
-             * @param _other Reference to the compared iterator.
-             * @return False - if both iterators are of the same instance (container, index and element value).\n True - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator!=(const AscendingIterator &_other) const;
-
-            /**
-             * @brief GT AscendingIterator comparison operator.
-             * @param _other Reference to the compared iterator.
-             * @return True - if the index of THIS iterator is grater then the index of _other.\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator>(const AscendingIterator &_other) const;
-
-            /**
-             * @brief LT AscendingIterator comparison operator.
-             * @param _other Reference to the compared iterator.
-             * @return True - if the index of THIS iterator is lower then the index of _other.\n False - else.
-             * @details Both iterators must be of the same type and traversal over the same container.
-             * @throws std::runtime_error If both iterators are not of the same implemented type of iterator.
-             * @throws std::runtime_error If both iterators don't traversal the same container.
-             */
-            bool operator<(const AscendingIterator &_other) const;
-
-
-            // Overriding Iterator operations:
-
-            bool operator==(const Iterator &_other) const override;
-
-            bool operator!=(const Iterator &_other) const override;
-
-            bool operator>(const Iterator &_other) const override;
-
-            bool operator<(const Iterator &_other) const override;
-
-            int operator*() const override;
-
-
-            // Other operators:
+            // Override operator:
 
             /**
              * @brief Pre-increment operator (++i).
              * @throws std::runtime_error If this is the last element.
              */
-            AscendingIterator &operator++();
-
-            friend std::ostream &operator<<(ostream &output, AscendingIterator &_other);
+            Iterator &operator++() override;
 
 
             // Iterator functions:

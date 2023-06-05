@@ -7,186 +7,73 @@ using namespace std;
 namespace ariel {
 
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container) :
-            Iterator(ASCENDING_ITER),
-            _container(container),
-            _index(0) {
+            Iterator(container) {
         this->_curr_iter = container.og_set.begin();
     }
 
     MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &_other) :
-            Iterator(_other.getType()),
-            _container(_other._container),
-            _index(0),
+            Iterator(_other),
             _curr_iter(_other._curr_iter) {
-        if (&this->_container != &_other._container) {
+        if (&this->getContainer() != &_other.getContainer()) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
     }
 
-    MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer::AscendingIterator &&_other)
-
-    noexcept:
-            Iterator(_other
-                             .
-
-                                     getType()
-
-            ),
-            _container(_other
-                               ._container),
-            _index(_other
-                           ._index),
-            _curr_iter(_other
-                               ._curr_iter) {
-    }
+    MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer::AscendingIterator &&_other) noexcept:
+            Iterator(_other),
+            _curr_iter(_other._curr_iter) {}
 
     MagicalContainer::AscendingIterator::~AscendingIterator() = default;
+
 
     MagicalContainer::AscendingIterator &
     MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &_other) {
         if (this != &_other) {
-            if (&this->_container != &_other._container) {
+            if (&this->getContainer() != &_other.getContainer()) {
                 throw std::runtime_error("RUNTIME ERROR: have of the same container!\n");
             }
-            this->_index = _other._index;
+            this->setIndex(_other.getIndex());
+            this->setElement(_other.getElement());
         }
         return *this;
     }
 
     MagicalContainer::AscendingIterator &
-    MagicalContainer::AscendingIterator::operator=(MagicalContainer::AscendingIterator &&_other)
-
-    noexcept {
+    MagicalContainer::AscendingIterator::operator=(MagicalContainer::AscendingIterator &&_other) noexcept {
         if (this != &_other) {
-            this->
-                    _container = _other._container;
-            this->
-                    _index = _other._index;
+            this->setContainer(_other.getContainer());
+            this->setIndex(_other.getIndex());
+            this->setElement(_other.getElement());
         }
         return *this;
     }
 
-    bool MagicalContainer::AscendingIterator::operator==(const MagicalContainer::AscendingIterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != _other.getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return *this->_curr_iter == *_other._curr_iter;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator!=(const MagicalContainer::AscendingIterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != _other.getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return *this->_curr_iter != *_other._curr_iter;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator>(const MagicalContainer::AscendingIterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != _other.getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return this->_index > _other._index;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator<(const MagicalContainer::AscendingIterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != _other.getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return this->_index < _other._index;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator==(const MagicalContainer::Iterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != cast_other->getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &cast_other->_container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return *this->_curr_iter == *cast_other->_curr_iter;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator!=(const MagicalContainer::Iterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != cast_other->getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &cast_other->_container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return *this->_curr_iter != *cast_other->_curr_iter;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator>(const MagicalContainer::Iterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != cast_other->getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &cast_other->_container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return this->_index > cast_other->_index;
-    }
-
-    bool MagicalContainer::AscendingIterator::operator<(const MagicalContainer::Iterator &_other) const {
-        const auto *cast_other = dynamic_cast<const AscendingIterator *>(&_other);
-        if (cast_other == nullptr || this->getType() != cast_other->getType()) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
-        }
-        if (&this->_container != &cast_other->_container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
-        }
-        return this->_index > cast_other->_index;
-    }
-
-    int MagicalContainer::AscendingIterator::operator*() const {
-        return *this->_curr_iter;
-    }
-
-    MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
-        if (this->_index >= this->_container.size()) {
+    MagicalContainer::Iterator &MagicalContainer::AscendingIterator::operator++() {
+        if (this->getIndex() >= this->getContainer().size()) {
             throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
         }
-        ++this->_index;
+        ++*this;
         ++this->_curr_iter;
+        this->setElement(*this->_curr_iter);
         return *this;
-    }
-
-    std::ostream &operator<<(ostream &output, MagicalContainer::AscendingIterator &_other) {
-        return output << *_other._curr_iter;
     }
 
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container, long index) :
-            Iterator(this->getType()),
-            _container(container),
-            _index(index) {
+            Iterator(container) {
         this->_curr_iter = container.og_set.begin();
         for (int i = 0; i < index; ++i) {
-            ++_curr_iter;
+            ++*this;
+            ++this->_curr_iter;
         }
+        this->setElement(*this->_curr_iter);
     }
 
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() {
-        return {this->_container, 0};
+        return {this->getContainer(), 0};
     }
 
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() {
-        return {this->_container, this->_container.size()};
+        return {this->getContainer(), this->getContainer().size()};
     }
 
 
