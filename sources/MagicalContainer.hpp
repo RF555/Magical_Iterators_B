@@ -33,13 +33,17 @@ namespace ariel {
 
         MagicalContainer(const MagicalContainer &_other);
 
-        MagicalContainer(MagicalContainer &&_other) noexcept;
+        MagicalContainer(MagicalContainer &&_other)
+
+        noexcept;
 
         ~MagicalContainer();
 
         MagicalContainer &operator=(const MagicalContainer &_other);
 
-        MagicalContainer &operator=(MagicalContainer &&_other) noexcept;
+        MagicalContainer &operator=(MagicalContainer &&_other)
+
+        noexcept;
 
         void addElement(int element);
 
@@ -64,59 +68,44 @@ namespace ariel {
 
     public:
 
-        enum IterType {
-            PURE_ITER = -1,
-            ASCENDING_ITER = 0,
-            CROSS_ITER = 1,
-            PRIME_ITER = 2
-        };
-
         /**
          * @class Inner interface representing iterators over the MagicalContainer's elements.
          * @details each implementation of this class would traversal over the elements in a different order.
          */
         class Iterator {
         private:
-            /**
-             * @brief Represents the implementation type of the Iterator.
-             */
-            IterType _type;
-
-        protected:
-            IterType getType() const { return _type; }
+            MagicalContainer &_container;
 
         public:
-            Iterator() :
-                    _type(PURE_ITER) {}
+            Iterator();
 
-            explicit Iterator(IterType my_type) :
-                    _type(my_type) {}
+            explicit Iterator(MagicalContainer &my_container);
 
             /**
              * @brief Copy constructor.
              * @param _other Iterator instance to copy.
              */
-            Iterator(const Iterator &_other) = default;
+            Iterator(const Iterator &_other);
 
             /**
              * @brief Move constructor.
              * @param _other Iterator instance to move.
              */
-            Iterator(Iterator &&_other) = default;
+            Iterator(Iterator &&_other);
 
-            virtual ~Iterator() = default;
+            virtual ~Iterator();
 
             /**
              * @brief Copy assignment operator.
              * @param _other Iterator instance to copy.
              */
-            Iterator &operator=(const Iterator &_other) = default;
+            Iterator &operator=(const Iterator &_other);
 
             /**
              * @brief Move assignment operator.
              * @param _other Iterator instance to move.
              */
-            Iterator &operator=(Iterator &&_other) = default;
+            Iterator &operator=(Iterator &&_other);
 
 
             // Boolean operations:
@@ -169,6 +158,19 @@ namespace ariel {
              */
             virtual int operator*() const = 0;
 
+
+            // Iterator functions:
+
+            /**
+             * @return Reference to the iterator pointing to the first element of the magical_container.
+             */
+            virtual Iterator begin() = 0;
+
+            /**
+             * @return Reference to the iterator pointing to the last element of the magical_container.
+             */
+            virtual Iterator end() = 0;
+
         };
 
 
@@ -194,13 +196,17 @@ namespace ariel {
 
             AscendingIterator(const AscendingIterator &_other);
 
-            AscendingIterator(AscendingIterator &&_other) noexcept;
+            AscendingIterator(AscendingIterator &&_other)
+
+            noexcept;
 
             ~AscendingIterator() override;
 
             AscendingIterator &operator=(const AscendingIterator &_other);
 
-            AscendingIterator &operator=(AscendingIterator &&_other) noexcept;
+            AscendingIterator &operator=(AscendingIterator &&_other)
+
+            noexcept;
 
 
             // Boolean operations:
@@ -313,13 +319,17 @@ namespace ariel {
 
             SideCrossIterator(const SideCrossIterator &_other);
 
-            SideCrossIterator(SideCrossIterator &&_other) noexcept;
+            SideCrossIterator(SideCrossIterator &&_other)
+
+            noexcept;
 
             ~SideCrossIterator() override;
 
             SideCrossIterator &operator=(const SideCrossIterator &_other);
 
-            SideCrossIterator &operator=(SideCrossIterator &&_other) noexcept;
+            SideCrossIterator &operator=(SideCrossIterator &&_other)
+
+            noexcept;
 
 
             // Boolean operations:
@@ -420,13 +430,17 @@ namespace ariel {
 
             PrimeIterator(const PrimeIterator &_other);
 
-            PrimeIterator(PrimeIterator &&_other) noexcept;
+            PrimeIterator(PrimeIterator &&_other)
+
+            noexcept;
 
             ~PrimeIterator() override;
 
             PrimeIterator &operator=(const PrimeIterator &_other);
 
-            PrimeIterator &operator=(PrimeIterator &&_other) noexcept;
+            PrimeIterator &operator=(PrimeIterator &&_other)
+
+            noexcept;
 
 
             // Boolean operations:
