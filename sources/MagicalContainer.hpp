@@ -166,13 +166,13 @@ namespace ariel {
              * @brief Dereference operator.
              * @return The int value of this element.
              */
-            virtual int operator*() const = 0;
+            virtual int operator*() const;
 
             /**
              * @brief Pre-increment operator (++i).
              * @throws std::runtime_error If this is the last element.
              */
-            virtual Iterator &operator++() = 0;
+            virtual Iterator &operator++();
 
             friend std::ostream &operator<<(ostream &output, Iterator &_other);
 
