@@ -261,9 +261,8 @@ namespace ariel {
         class SideCrossIterator : public Iterator {
 
         private:
-            vector<int>::iterator _curr_iter;
 
-            SideCrossIterator(MagicalContainer &container, unsigned long index);
+            SideCrossIterator(SideCrossIterator &_other, unsigned long index);
 
         public:
 

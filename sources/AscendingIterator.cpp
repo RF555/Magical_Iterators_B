@@ -5,8 +5,7 @@ using namespace std;
 namespace ariel {
 
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container) :
-            Iterator(container, container.ascend_vector) {
-    }
+            Iterator(container, container.ascend_vector) {}
 
     MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &_other) :
             Iterator(_other) {
@@ -19,7 +18,6 @@ namespace ariel {
             Iterator(_other) {}
 
     MagicalContainer::AscendingIterator::~AscendingIterator() = default;
-
 
     MagicalContainer::AscendingIterator &
     MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &_other) {
@@ -39,7 +37,7 @@ namespace ariel {
     }
 
     MagicalContainer::AscendingIterator::AscendingIterator(AscendingIterator &_other, unsigned long index) :
-            Iterator(*this, index) {}
+            Iterator(_other, index) {}
 
     MagicalContainer::Iterator MagicalContainer::AscendingIterator::begin() {
         return AscendingIterator(*this, 0);
@@ -48,6 +46,4 @@ namespace ariel {
     MagicalContainer::Iterator MagicalContainer::AscendingIterator::end() {
         return AscendingIterator(*this, this->getContainer().size());
     }
-
-
 }

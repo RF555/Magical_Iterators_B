@@ -5,28 +5,23 @@ using namespace std;
 namespace ariel {
 
     MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container) :
-            Iterator(container) {
-        this->_curr_iter = container.cross_vector.begin();
-    }
+            Iterator(container, container.cross_vector) {}
 
     MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &_other) :
-            Iterator(_other),
-            _curr_iter(_other._curr_iter) {
+            Iterator(_other) {
         if (&this->getContainer() != &_other.getContainer()) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
     }
 
     MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer::SideCrossIterator &&_other) noexcept:
-            Iterator(_other),
-            _curr_iter(_other._curr_iter) {}
+            Iterator(_other) {}
 
     MagicalContainer::SideCrossIterator::~SideCrossIterator() = default;
 
     MagicalContainer::SideCrossIterator &
     MagicalContainer::SideCrossIterator::operator=(const MagicalContainer::SideCrossIterator &_other) {
         this->Iterator::operator=(_other);
-        this->_curr_iter = _other._curr_iter;
         return *this;
     }
 
@@ -35,36 +30,20 @@ namespace ariel {
         if (this != &_other) {
             this->setContainer(_other.getContainer());
             this->setIndex(_other.getIndex());
-            this->setElement(_other.getElement());
+            this->setVecPtr(_other.getVecPtr());
+            this->setCurrIter(_other.getCurrIter());
         }
         return *this;
     }
 
+    MagicalContainer::SideCrossIterator::SideCrossIterator(SideCrossIterator &_other, unsigned long index) :
+            Iterator(_other, index) {}
 
-    MagicalContainer::Iterator &MagicalContainer::SideCrossIterator::operator++() {
-        this->Iterator::operator++();
-        ++this->_curr_iter;
-        this->setElement(*this->_curr_iter);
-        return *this;
+    MagicalContainer::Iterator MagicalContainer::SideCrossIterator::begin() {
+        return SideCrossIterator(*this, 0);
     }
 
-    MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container, long index) :
-            Iterator(container) {
-        this->_curr_iter = container.cross_vector.begin();
-        for (int i = 0; i < index; ++i) {
-            this->Iterator::operator++();
-            ++this->_curr_iter;
-        }
-        this->setElement(*this->_curr_iter);
+    MagicalContainer::Iterator MagicalContainer::SideCrossIterator::end() {
+        return SideCrossIterator(*this, this->getContainer().size());
     }
-
-    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin() {
-        return {this->getContainer(), 0};
-    }
-
-    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
-        return {this->getContainer(), this->getContainer().size()};
-    }
-
-
 }

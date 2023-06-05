@@ -32,7 +32,7 @@ namespace ariel {
     MagicalContainer::MagicalContainer(const ariel::MagicalContainer &_other) :
             og_set(_other.og_set),
             cross_vector(vector<int>(_other.cross_vector)),
-            prime_vector(set<int>(_other.prime_vector)) {}
+            prime_vector(vector<int>(_other.prime_vector)) {}
 
     MagicalContainer::MagicalContainer(ariel::MagicalContainer &&_other)
 
