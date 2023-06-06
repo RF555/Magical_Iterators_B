@@ -1,17 +1,16 @@
 #ifndef MAGICAL_CONTAINER_HPP
 #define MAGICAL_CONTAINER_HPP
 
+
+#include "../OLD/MY_DEBUG_TOOL.hpp"
+
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <set>
 #include <iterator>
 
-#define DEF_DEBUG(stage) "\n\033[0;36m[DEBUG]\033[0;37m" << ": " << stage <<
-#define DEF_FUNC "\t\033[0;35mFunc: \033[0;32m" << __func__<<
-#define PRE_DEFAULT "\x1b[0m" <<
-#define DEF_FILE_LINE "\n\tFile \"" << __FILE__ << "\": Line: " << __LINE__ << "\n"
-#define DEBUG(stage) std::cout << DEF_DEBUG(stage) DEF_FUNC PRE_DEFAULT DEF_FILE_LINE << std::endl;
 
 using namespace std;
 
@@ -56,6 +55,9 @@ namespace ariel {
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
         static void printVector(vector<int> &_vec);
+
+
+        void printOG();
 
         void printAscend();
 

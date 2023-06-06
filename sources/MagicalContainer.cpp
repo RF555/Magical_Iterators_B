@@ -6,6 +6,7 @@
 namespace ariel {
 
     bool isPrime(int num) {
+        DEBUG_INPUT("prime check " << num)
         if (num <= 1) {
             return false;
         }
@@ -19,13 +20,39 @@ namespace ariel {
         }
 
         for (int i = 5; i * i <= num; i = i + 6) {
+            DEBUG_INPUT("CHECK i = " << i)
             if (num % i == 0 || num % (i + 2) == 0) {
+                DEBUG_INPUT("num % i = " << num % i)
                 return false;
             }
         }
 
         return true;
     }
+//    int isPrime(int num) {
+//        DEBUG_INPUT("prime check", num)
+//        if (num <= 1) {
+//            return -1; // false
+//        }
+//
+//        if (num <= 3) {
+//            return 0; // true
+//        }
+//
+//        if (num % 2 == 0 || num % 3 == 0) {
+//            return -1; // false
+//        }
+//
+//        for (int i = 5; i * i <= num; i = i + 6) {
+//            DEBUG_INPUT("CHECK i =", i)
+//            if (num % i == 0 || num % (i + 2) == 0) {
+//                DEBUG_INPUT("num % i =", num % i)
+//                return -1; // false
+//            }
+//        }
+//
+//        return 0; // true
+//    }
 
     MagicalContainer::MagicalContainer() = default;
 
@@ -60,7 +87,7 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
-        DEBUG(1)
+        DEBUG_INPUT("add " << element)
         bool exists = this->og_set.contains(element);
         this->og_set.insert(element);
         if (!exists) {
@@ -71,8 +98,16 @@ namespace ariel {
                 std::sort(this->prime_vector.begin(), this->prime_vector.end());
             }
 
+            DEBUG_INPUT("before updateCross():")
+            printOG();
+            printCross();
+
             this->updateCross();
+            DEBUG_INPUT("after updateCross():")
+            cout << this;
+
         }
+        DEBUG_INPUT("finished adding " << element << " ")
     }
 
     void MagicalContainer::updateAscend() {
@@ -80,19 +115,32 @@ namespace ariel {
         for (auto it: this->og_set) {
             this->ascend_vector.push_back(it);
         }
-        printAscend();
     }
 
     void MagicalContainer::updateCross() {
         this->cross_vector.clear();
         auto ascend_iter = this->og_set.begin();
-        auto descend_iter = this->og_set.end();
-        while (ascend_iter != descend_iter) {
+        auto descend_iter = this->og_set.rbegin();
+
+        DEBUG
+        cout << this;
+
+        while (*ascend_iter != *descend_iter) {
+            DEBUG_INPUT("ascend_iter = " << *ascend_iter)
             this->cross_vector.push_back(*ascend_iter);
             ++ascend_iter;
+            DEBUG_INPUT("descend_iter = " << *descend_iter)
             this->cross_vector.push_back(*descend_iter);
-            --descend_iter;
+            if (*ascend_iter != *descend_iter) {
+                ++descend_iter;
+            }
+            cout << this;
         }
+
+        if (this->og_set.size() % 2 != 0) {
+            this->cross_vector.push_back(*ascend_iter);
+        }
+
     }
 
     void MagicalContainer::removeElement(int element) {
@@ -114,34 +162,69 @@ namespace ariel {
     }
 
     std::ostream &operator<<(ostream &output, MagicalContainer &_other) {
-        output << "{ ";
+        output << "MagicalContainer:\n";
+
+        output << "\tog_set: { ";
         for (auto element: _other.og_set) {
             output << element << " ";
         }
-        output << "}";
+        output << "}\t\t\tsize: " << _other.og_set.size() << "\n";
+
+        output << "\tascend_vector: { ";
+        for (auto element: _other.ascend_vector)
+            cout << element << " ";
+        output << "}\t\tsize: " << _other.ascend_vector.size() << "\n";
+
+        cout << "\tcross_vector: { ";
+        for (auto element: _other.cross_vector)
+            cout << element << " ";
+        output << "}\t\tsize: " << _other.cross_vector.size() << "\n";
+
+        cout << "\tprime_vector: { ";
+        for (auto element: _other.prime_vector)
+            cout << element << " ";
+        output << "}\t\tsize: " << _other.prime_vector.size() << "\n";
+
+        return output;
+    }
+
+    ostream &streamVector(ostream &output, vector<int> &_vec) {
+        output << "{ ";
+        for (auto element: _vec) {
+            cout << element << " ";
+        }
+        output << "}  size: " << _vec.size() << "\n";
         return output;
     }
 
     void MagicalContainer::printVector(vector<int> &_vec) {
-        cout<<"{ ";
+        cout << "{ ";
         for (auto element: _vec) {
             cout << element << " ";
         }
-        cout << "}\n";
+        cout << "}  size: " << _vec.size() << "\n";
+    }
+
+    void MagicalContainer::printOG() {
+        cout << "og_set: { ";
+        for (auto element: this->og_set) {
+            cout << element << " ";
+        }
+        cout << "}  size: " << this->og_set.size() << "\n";
     }
 
     void MagicalContainer::printAscend() {
-        cout<<"ascend_vector: ";
+        cout << "ascend_vector: ";
         printVector(this->ascend_vector);
     }
 
     void MagicalContainer::printCross() {
-        cout<<"cross_vector: ";
+        cout << "cross_vector: ";
         printVector(this->cross_vector);
     }
 
     void MagicalContainer::printPrime() {
-        cout<<"prime_vector: ";
+        cout << "prime_vector: ";
         printVector(this->prime_vector);
     }
 

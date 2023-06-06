@@ -21,6 +21,9 @@ demo: Demo.o $(OBJECTS)
 my_demo: MyDemo.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
+my_demo2: MyDemo2.o $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 test: TestRunner.o StudentTest1.o  $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
