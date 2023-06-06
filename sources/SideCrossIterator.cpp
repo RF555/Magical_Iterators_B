@@ -39,11 +39,11 @@ namespace ariel {
     MagicalContainer::SideCrossIterator::SideCrossIterator(SideCrossIterator &_other, unsigned long index) :
             Iterator(_other, index) {}
 
-    MagicalContainer::Iterator MagicalContainer::SideCrossIterator::begin() {
+    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin() {
         return SideCrossIterator(*this, 0);
     }
 
-    MagicalContainer::Iterator MagicalContainer::SideCrossIterator::end() {
+    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
         return SideCrossIterator(*this, this->getVecPtr().size());
     }
 }

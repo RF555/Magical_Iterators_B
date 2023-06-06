@@ -63,6 +63,9 @@ namespace ariel {
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
+        if (this->_vec_ptr.empty()){
+            return true;
+        }
         return *this->_curr_iter == *_other._curr_iter;
     }
 
@@ -72,6 +75,9 @@ namespace ariel {
         }
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+        }
+        if (this->_vec_ptr.empty()){
+            return false;
         }
         return *this->_curr_iter != *_other._curr_iter;
     }
@@ -83,6 +89,9 @@ namespace ariel {
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
         }
+        if (this->_vec_ptr.empty()){
+            return false;
+        }
         return this->_index > _other._index;
     }
 
@@ -92,6 +101,9 @@ namespace ariel {
         }
         if (&this->_container != &_other._container) {
             throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+        }
+        if (this->_vec_ptr.empty()){
+            return false;
         }
         return this->_index < _other._index;
     }
@@ -105,7 +117,7 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator &MagicalContainer::Iterator::operator++() {
-        if (*this == this->end()) {
+        if (this->_index >= this->_vec_ptr.size()) {
             throw std::runtime_error("RUNTIME ERROR: Can not iterate past the last element!\n");
         }
         ++this->_index;
@@ -114,9 +126,9 @@ namespace ariel {
     }
 
     MagicalContainer &MagicalContainer::Iterator::getContainer() const {
-        if (this->_index >= this->_container.size()) {
-            throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
-        }
+//        if (this->_index >= this->_container.size()) {
+//            throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
+//        }
         return _container;
     }
 
@@ -168,12 +180,12 @@ namespace ariel {
         }
     }
 
-    MagicalContainer::Iterator MagicalContainer::Iterator::begin() {
-        return {*this, 0};
-    }
-
-    MagicalContainer::Iterator MagicalContainer::Iterator::end() {
-        return {*this, this->_vec_ptr.size()};
-    }
+//    MagicalContainer::Iterator MagicalContainer::Iterator::begin() {
+//        return {*this, 0};
+//    }
+//
+//    MagicalContainer::Iterator MagicalContainer::Iterator::end() {
+//        return {*this, this->_vec_ptr.size()};
+//    }
 
 }

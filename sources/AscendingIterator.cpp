@@ -39,11 +39,11 @@ namespace ariel {
     MagicalContainer::AscendingIterator::AscendingIterator(AscendingIterator &_other, unsigned long index) :
             Iterator(_other, index) {}
 
-    MagicalContainer::Iterator MagicalContainer::AscendingIterator::begin() {
+    MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() {
         return AscendingIterator(*this, 0);
     }
 
-    MagicalContainer::Iterator MagicalContainer::AscendingIterator::end() {
+    MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() {
         return AscendingIterator(*this, this->getVecPtr().size());
     }
 }

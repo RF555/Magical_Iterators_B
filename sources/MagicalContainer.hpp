@@ -46,10 +46,19 @@ namespace ariel {
 
         MagicalContainer &operator=(MagicalContainer &&_other) noexcept;
 
+        /**
+         * @brief Add an element to the container.
+         * @param element The element to add.
+         */
         void addElement(int element);
 
         unsigned long size() const;
 
+        /**
+         * @brief Remove an element from the container.
+         * @param element The element to remove.
+         * @throws std::runtime_error If the element does not exist in the container.
+         */
         void removeElement(int element);
 
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
@@ -208,15 +217,15 @@ namespace ariel {
 
             // Iterator functions:
 
-            /**
-            * @return Reference to the iterator pointing to the first element of the magical_container.
-            */
-            virtual Iterator begin();
-
-            /**
-            * @return Reference to the iterator pointing to the last element of the magical_container.
-            */
-            virtual Iterator end();
+//            /**
+//            * @return Reference to the iterator pointing to the first element of the magical_container.
+//            */
+//            virtual Iterator begin();
+//
+//            /**
+//            * @return Reference to the iterator pointing to the last element of the magical_container.
+//            */
+//            virtual Iterator end();
 
         };
 
@@ -252,9 +261,15 @@ namespace ariel {
 
             // Override functions:
 
-            Iterator begin() override;
+            /**
+            * @return Reference to the iterator pointing to the first element of the magical_container.
+            */
+            AscendingIterator begin();
 
-            Iterator end() override;
+            /**
+            * @return Reference to the iterator pointing to the last element of the magical_container.
+            */
+            AscendingIterator end();
         };
 
 
@@ -295,9 +310,15 @@ namespace ariel {
 
             // Override functions:
 
-            Iterator begin() override;
+            /**
+            * @return Reference to the iterator pointing to the first element of the magical_container.
+            */
+            virtual SideCrossIterator begin();
 
-            Iterator end() override;
+            /**
+            * @return Reference to the iterator pointing to the last element of the magical_container.
+            */
+            virtual SideCrossIterator end();
         };
 
 
@@ -331,9 +352,15 @@ namespace ariel {
 
             // Override functions:
 
-            Iterator begin() override;
+            /**
+            * @return Reference to the iterator pointing to the first element of the magical_container.
+            */
+             PrimeIterator begin();
 
-            Iterator end() override;
+            /**
+            * @return Reference to the iterator pointing to the last element of the magical_container.
+            */
+             PrimeIterator end();
         };
 
     };

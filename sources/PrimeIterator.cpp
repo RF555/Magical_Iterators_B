@@ -39,11 +39,11 @@ namespace ariel {
     MagicalContainer::PrimeIterator::PrimeIterator(PrimeIterator &_other, unsigned long index) :
             Iterator(_other, index) {}
 
-    MagicalContainer::Iterator MagicalContainer::PrimeIterator::begin() {
+    MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin() {
         return PrimeIterator(*this, 0);
     }
 
-    MagicalContainer::Iterator MagicalContainer::PrimeIterator::end() {
+    MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() {
         return PrimeIterator(*this, this->getVecPtr().size());
     }
 }

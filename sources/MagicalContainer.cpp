@@ -6,7 +6,6 @@
 namespace ariel {
 
     bool isPrime(int num) {
-//        DEBUG_INPUT("prime check " << num)
         if (num <= 1) {
             return false;
         }
@@ -20,9 +19,7 @@ namespace ariel {
         }
 
         for (int i = 5; i * i <= num; i = i + 6) {
-//            DEBUG_INPUT("CHECK i = " << i)
             if (num % i == 0 || num % (i + 2) == 0) {
-//                DEBUG_INPUT("num % i = " << num % i)
                 return false;
             }
         }
@@ -63,7 +60,6 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
-//        DEBUG_INPUT("add " << element)
         bool exists = this->og_set.contains(element);
         this->og_set.insert(element);
         if (!exists) {
@@ -75,11 +71,7 @@ namespace ariel {
             }
 
             this->updateCross();
-//            DEBUG_INPUT("after updateCross():")
-//            cout << this;
-
         }
-//        DEBUG_INPUT("finished adding " << element << " ")
     }
 
     void MagicalContainer::updateAscend() {
@@ -95,8 +87,6 @@ namespace ariel {
         auto descend_iter = this->og_set.rbegin();
 
         while (*ascend_iter != *descend_iter) {
-//            DEBUG_INPUT("ascend_iter = " << *ascend_iter)
-//            DEBUG_INPUT("descend_iter = " << *descend_iter)
             this->cross_vector.push_back(*ascend_iter);
             ++ascend_iter;
             this->cross_vector.push_back(*descend_iter);
@@ -108,13 +98,14 @@ namespace ariel {
         if (this->og_set.size() % 2 != 0) {
             this->cross_vector.push_back(*ascend_iter);
         }
-
     }
 
     void MagicalContainer::removeElement(int element) {
         bool exists = this->og_set.contains(element);
-        this->og_set.erase(element);
         if (!exists) {
+            throw std::runtime_error("RUNTIME ERROR: Element doesn't exist in the container!\n");
+        }else{
+            this->og_set.erase(element);
             std::remove(this->ascend_vector.begin(), this->ascend_vector.end(), element);
 
             if (isPrime(element)) {
