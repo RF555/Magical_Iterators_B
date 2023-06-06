@@ -44,6 +44,6 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator MagicalContainer::SideCrossIterator::end() {
-        return SideCrossIterator(*this, this->getContainer().size());
+        return SideCrossIterator(*this, this->getVecPtr().size());
     }
 }

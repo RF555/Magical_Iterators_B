@@ -44,6 +44,6 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator MagicalContainer::PrimeIterator::end() {
-        return PrimeIterator(*this, this->getContainer().size());
+        return PrimeIterator(*this, this->getVecPtr().size());
     }
 }
