@@ -27,6 +27,9 @@ my_demo2: MyDemo2.o $(OBJECTS)
 test: TestRunner.o StudentTest1.o  $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
+my_test: TestRunner.o MyTest.o  $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 
 tidy:
 	$(TIDY) $(HEADERS) $(TIDY_FLAGS) --

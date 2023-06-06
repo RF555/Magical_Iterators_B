@@ -104,12 +104,17 @@ namespace ariel {
         bool exists = this->og_set.contains(element);
         if (!exists) {
             throw std::runtime_error("RUNTIME ERROR: Element doesn't exist in the container!\n");
-        }else{
+        } else {
             this->og_set.erase(element);
-            std::remove(this->ascend_vector.begin(), this->ascend_vector.end(), element);
+            updateAscend();
 
             if (isPrime(element)) {
-                std::remove(this->prime_vector.begin(), this->prime_vector.end(), element);
+                this->prime_vector.clear();
+                for (auto it: this->og_set) {
+                    if (isPrime(it)) {
+                        this->prime_vector.push_back(it);
+                    }
+                }
             }
 
             this->updateCross();
