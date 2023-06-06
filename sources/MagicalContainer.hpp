@@ -2,9 +2,6 @@
 #define MAGICAL_CONTAINER_HPP
 
 
-#include "../OLD/MY_DEBUG_TOOL.hpp"
-
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -355,12 +352,12 @@ namespace ariel {
             /**
             * @return Reference to the iterator pointing to the first element of the magical_container.
             */
-             PrimeIterator begin();
+            PrimeIterator begin();
 
             /**
             * @return Reference to the iterator pointing to the last element of the magical_container.
             */
-             PrimeIterator end();
+            PrimeIterator end();
         };
 
     };
