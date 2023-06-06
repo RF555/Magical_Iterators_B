@@ -6,7 +6,7 @@
 namespace ariel {
 
     bool isPrime(int num) {
-        DEBUG_INPUT("prime check " << num)
+//        DEBUG_INPUT("prime check " << num)
         if (num <= 1) {
             return false;
         }
@@ -20,39 +20,15 @@ namespace ariel {
         }
 
         for (int i = 5; i * i <= num; i = i + 6) {
-            DEBUG_INPUT("CHECK i = " << i)
+//            DEBUG_INPUT("CHECK i = " << i)
             if (num % i == 0 || num % (i + 2) == 0) {
-                DEBUG_INPUT("num % i = " << num % i)
+//                DEBUG_INPUT("num % i = " << num % i)
                 return false;
             }
         }
 
         return true;
     }
-//    int isPrime(int num) {
-//        DEBUG_INPUT("prime check", num)
-//        if (num <= 1) {
-//            return -1; // false
-//        }
-//
-//        if (num <= 3) {
-//            return 0; // true
-//        }
-//
-//        if (num % 2 == 0 || num % 3 == 0) {
-//            return -1; // false
-//        }
-//
-//        for (int i = 5; i * i <= num; i = i + 6) {
-//            DEBUG_INPUT("CHECK i =", i)
-//            if (num % i == 0 || num % (i + 2) == 0) {
-//                DEBUG_INPUT("num % i =", num % i)
-//                return -1; // false
-//            }
-//        }
-//
-//        return 0; // true
-//    }
 
     MagicalContainer::MagicalContainer() = default;
 
@@ -87,7 +63,7 @@ namespace ariel {
     }
 
     void MagicalContainer::addElement(int element) {
-        DEBUG_INPUT("add " << element)
+//        DEBUG_INPUT("add " << element)
         bool exists = this->og_set.contains(element);
         this->og_set.insert(element);
         if (!exists) {
@@ -98,16 +74,12 @@ namespace ariel {
                 std::sort(this->prime_vector.begin(), this->prime_vector.end());
             }
 
-            DEBUG_INPUT("before updateCross():")
-            printOG();
-            printCross();
-
             this->updateCross();
-            DEBUG_INPUT("after updateCross():")
-            cout << this;
+//            DEBUG_INPUT("after updateCross():")
+//            cout << this;
 
         }
-        DEBUG_INPUT("finished adding " << element << " ")
+//        DEBUG_INPUT("finished adding " << element << " ")
     }
 
     void MagicalContainer::updateAscend() {
@@ -122,19 +94,15 @@ namespace ariel {
         auto ascend_iter = this->og_set.begin();
         auto descend_iter = this->og_set.rbegin();
 
-        DEBUG
-        cout << this;
-
         while (*ascend_iter != *descend_iter) {
-            DEBUG_INPUT("ascend_iter = " << *ascend_iter)
+//            DEBUG_INPUT("ascend_iter = " << *ascend_iter)
+//            DEBUG_INPUT("descend_iter = " << *descend_iter)
             this->cross_vector.push_back(*ascend_iter);
             ++ascend_iter;
-            DEBUG_INPUT("descend_iter = " << *descend_iter)
             this->cross_vector.push_back(*descend_iter);
             if (*ascend_iter != *descend_iter) {
                 ++descend_iter;
             }
-            cout << this;
         }
 
         if (this->og_set.size() % 2 != 0) {
