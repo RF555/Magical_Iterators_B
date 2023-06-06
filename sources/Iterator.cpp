@@ -68,6 +68,8 @@ namespace ariel {
 
     bool MagicalContainer::Iterator::operator!=(const MagicalContainer::Iterator &_other) const {
         if (typeid(this) != typeid(_other)) {
+            DEBUG_INPUT("typeid(this) = " << typeid(this).name())
+            DEBUG_INPUT("typeid(_other) = " << typeid(_other).name())
             throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
         }
         if (&this->_container != &_other._container) {
