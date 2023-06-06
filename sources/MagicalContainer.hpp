@@ -74,6 +74,8 @@ namespace ariel {
 
         void printPrime();
 
+        bool contains(int element);
+
     private:
         /**
          * @brief Update ascend_vector.
@@ -355,12 +357,12 @@ namespace ariel {
             /**
             * @return Reference to the iterator pointing to the first element of the magical_container.
             */
-             PrimeIterator begin();
+            PrimeIterator begin();
 
             /**
             * @return Reference to the iterator pointing to the last element of the magical_container.
             */
-             PrimeIterator end();
+            PrimeIterator end();
         };
 
     };

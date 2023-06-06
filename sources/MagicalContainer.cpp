@@ -83,6 +83,10 @@ namespace ariel {
 
     void MagicalContainer::updateCross() {
         this->cross_vector.clear();
+        if (this->og_set.empty()) {
+            return;
+        }
+
         auto ascend_iter = this->og_set.begin();
         auto descend_iter = this->og_set.rbegin();
 
@@ -116,7 +120,6 @@ namespace ariel {
                     }
                 }
             }
-
             this->updateCross();
         }
     }
@@ -190,6 +193,10 @@ namespace ariel {
     void MagicalContainer::printPrime() {
         cout << "prime_vector: ";
         printVector(this->prime_vector);
+    }
+
+    bool MagicalContainer::contains(int element) {
+        return this->og_set.contains(element);
     }
 
 
