@@ -44,6 +44,13 @@ namespace ariel {
     }
 
     MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() {
-        return PrimeIterator(*this, this->getVecRef().size());
+        return PrimeIterator(*this, this->getVecRef().size() - 1);
     }
+    MagicalContainer::Iterator &MagicalContainer::PrimeIterator::operator++() {
+        if (*this == this->end()) {
+            throw std::runtime_error("RUNTIME ERROR: Can not iterate past the last _element!\n");
+        }
+        return Iterator::operator++();
+    }
+
 }

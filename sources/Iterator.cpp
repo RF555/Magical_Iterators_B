@@ -168,7 +168,12 @@ namespace ariel {
             _container(_other._container),
             _index(index),
             _vec_ref(_other._vec_ref) {
-        if (index == _other._vec_ref.size() - 1) {
+        if (_other._vec_ref.empty()) {
+            this->_index = 0;
+            this->_curr_iter = _other._vec_ref.begin();
+        } else if (index >= _other._vec_ref.size()) {
+            throw std::runtime_error("RUNTIME ERROR: Index out of range!\n");
+        } else if (index == _other._vec_ref.size() - 1) {
             this->_curr_iter = _other._vec_ref.end();
         } else if (index == 0) {
             this->_curr_iter = _other._vec_ref.begin();

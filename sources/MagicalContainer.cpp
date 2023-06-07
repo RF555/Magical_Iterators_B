@@ -73,10 +73,12 @@ namespace ariel {
         if (prime) {
             this->prime_vector.clear();
         }
-        for (auto curr: this->og_set) {
-            this->ascend_vector.push_back(&curr);
-            if (prime && curr._prime) {
-                this->prime_vector.push_back(&curr);
+        auto ascend_iter = this->og_set.begin();
+
+        for (; ascend_iter != this->og_set.end(); ++ascend_iter) {
+            this->ascend_vector.push_back(&(*ascend_iter));
+            if (prime && ascend_iter->_prime) {
+                this->prime_vector.push_back(&(*ascend_iter));
             }
         }
     }
@@ -127,23 +129,23 @@ namespace ariel {
 
         output << "\tog_set: { ";
         for (auto element: _other.og_set) {
-            output << element << " ";
+            output << element._element << " ";
         }
         output << "}\t\t\tsize: " << _other.og_set.size() << "\n";
 
         output << "\tascend_vector: { ";
         for (auto element: _other.ascend_vector)
-            cout << element << " ";
+            cout << element->_element << " ";
         output << "}\t\tsize: " << _other.ascend_vector.size() << "\n";
 
         cout << "\tcross_vector: { ";
         for (auto element: _other.cross_vector)
-            cout << element << " ";
+            cout << element->_element << " ";
         output << "}\t\tsize: " << _other.cross_vector.size() << "\n";
 
         cout << "\tprime_vector: { ";
         for (auto element: _other.prime_vector)
-            cout << element << " ";
+            cout << element->_element << " ";
         output << "}\t\tsize: " << _other.prime_vector.size() << "\n";
 
         return output;
@@ -161,7 +163,7 @@ namespace ariel {
     void MagicalContainer::printVector(vector<const Element_t *> &_vec) {
         cout << "{ ";
         for (auto element: _vec) {
-            cout << element << " ";
+            cout << element->_element << " ";
         }
         cout << "}  size: " << _vec.size() << "\n";
     }
@@ -169,7 +171,7 @@ namespace ariel {
     void MagicalContainer::printOG() {
         cout << "og_set: { ";
         for (auto element: this->og_set) {
-            cout << element << " ";
+            cout << element._element << " ";
         }
         cout << "}  size: " << this->og_set.size() << "\n";
     }

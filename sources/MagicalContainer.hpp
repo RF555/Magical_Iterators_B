@@ -143,7 +143,7 @@ namespace ariel {
 
             void setVecRef(vector<const Element_t *> vecRef);
 
-             vector<const Element_t *>::iterator & getCurrIter() ;
+            vector<const Element_t *>::iterator &getCurrIter();
 
             void setCurrIter(vector<const Element_t *>::iterator &currIter);
 
@@ -151,13 +151,13 @@ namespace ariel {
 
             void setContainer(MagicalContainer &container);
 
-            int getElement() const;
-
-            unsigned long getIndex() const;
 
             void setIndex(unsigned long index);
 
         public:
+            unsigned long getIndex() const;
+
+            int getElement() const;
 
             explicit Iterator(MagicalContainer &my_container, vector<const Element_t *> &vec);
 
@@ -242,7 +242,7 @@ namespace ariel {
              * @brief Pre-increment operator (++i).
              * @throws std::runtime_error If this is the last _element.
              */
-            Iterator &operator++();
+            virtual Iterator &operator++();
 
             friend std::ostream &operator<<(ostream &output, Iterator &_other);
 
@@ -257,6 +257,7 @@ namespace ariel {
 //            * @return Reference to the iterator pointing to the last _element of the magical_container.
 //            */
 //            virtual Iterator end();
+
 
         };
 
@@ -291,6 +292,7 @@ namespace ariel {
 
 
             // Override functions:
+            Iterator &operator++() override;
 
             /**
             * @return Reference to the iterator pointing to the first _element of the magical_container.
@@ -340,6 +342,7 @@ namespace ariel {
 
 
             // Override functions:
+            Iterator &operator++() override;
 
             /**
             * @return Reference to the iterator pointing to the first _element of the magical_container.
@@ -382,6 +385,7 @@ namespace ariel {
 
 
             // Override functions:
+            Iterator &operator++() override;
 
             /**
             * @return Reference to the iterator pointing to the first _element of the magical_container.
