@@ -8,7 +8,7 @@ using namespace std;
 TEST_CASE("Adding elements to MagicalContainer") {
     MagicalContainer container;
 
-    SUBCASE("Adding a single element") {
+    SUBCASE("Adding a single _element") {
         container.addElement(10);
         CHECK(container.size() == 1);
     }
@@ -25,14 +25,14 @@ TEST_CASE("Adding elements to MagicalContainer") {
 TEST_CASE("Removing elements from MagicalContainer") {
     MagicalContainer container;
 
-    SUBCASE("Removing an existing element") {
+    SUBCASE("Removing an existing _element") {
         container.addElement(10);
         container.addElement(20);
         CHECK_NOTHROW(container.removeElement(10));
         CHECK(container.size() == 1);
     }
 
-    SUBCASE("Removing a non-existing element") {
+    SUBCASE("Removing a non-existing _element") {
         container.addElement(10);
         container.addElement(20);
         CHECK_THROWS_AS(container.removeElement(30), runtime_error);
@@ -548,8 +548,8 @@ TEST_CASE("PrimeIterator with No Prime Numbers") {
     }
 }
 
-// Test case for the SideCrossIterator with a single element in the magical_container
-TEST_CASE("SideCrossIterator with Single Element") {
+// Test case for the SideCrossIterator with a single _element in the magical_container
+TEST_CASE("SideCrossIterator with Single Element_t") {
     MagicalContainer container;
     container.addElement(100);
 

@@ -15,6 +15,8 @@
 using namespace std;
 
 namespace ariel {
+
+
     /**
      * @brief Primality test for a number.
      * @param num Number to test.
@@ -27,10 +29,35 @@ namespace ariel {
          ****** MagicalContainer class ******
          ************************************/
     private:
-        set<int> og_set;
-        vector<int> ascend_vector;
-        vector<int> cross_vector;
-        vector<int> prime_vector;
+
+        struct Element_t {
+            int _element;
+            bool _prime;
+
+            explicit Element_t(int element) :
+                    _element(element),
+                    _prime(isPrime(element)) {}
+
+            Element_t &operator=(const Element_t &_other) = default;
+
+            bool operator==(const Element_t &_other) const { return this->_element == _other._element; }
+
+            bool operator!=(const Element_t &_other) const { return this->_element != _other._element; }
+
+            bool operator>(const Element_t &_other) const { return this->_element > _other._element; }
+
+            bool operator<(const Element_t &_other) const { return this->_element < _other._element; }
+
+            friend std::ostream &operator<<(ostream &output, Element_t &_other) {
+                return output << _other._element;
+            }
+
+        };
+
+        set<Element_t> og_set;
+        vector<const Element_t *> ascend_vector;
+        vector<const Element_t *> cross_vector;
+        vector<const Element_t *> prime_vector;
 
     public:
 
@@ -47,23 +74,23 @@ namespace ariel {
         MagicalContainer &operator=(MagicalContainer &&_other) noexcept;
 
         /**
-         * @brief Add an element to the container.
-         * @param element The element to add.
+         * @brief Add an new_element to the container.
+         * @param new_element The new_element to add.
          */
-        void addElement(int element);
+        void addElement(int new_element);
 
         unsigned long size() const;
 
         /**
-         * @brief Remove an element from the container.
-         * @param element The element to remove.
-         * @throws std::runtime_error If the element does not exist in the container.
+         * @brief Remove an _element from the container.
+         * @param element The _element to remove.
+         * @throws std::runtime_error If the _element does not exist in the container.
          */
         void removeElement(int element);
 
         friend std::ostream &operator<<(ostream &output, MagicalContainer &_other);
 
-        static void printVector(vector<int> &_vec);
+        static void printVector(vector<const Element_t *> &_vec);
 
 
         void printOG();
@@ -74,13 +101,15 @@ namespace ariel {
 
         void printPrime();
 
+        bool contains(Element_t &element);
+
         bool contains(int element);
 
     private:
         /**
-         * @brief Update ascend_vector.
+         * @brief Update ascend_vector AND prime_vector.
          */
-        void updateAscend();
+        void updateAscendPrime(bool prime);
 
         /**
          * @brief Update cross_vector.
@@ -103,20 +132,20 @@ namespace ariel {
         private:
             MagicalContainer &_container;
             unsigned long _index;
-            vector<int> &_vec_ptr;
-            vector<int>::iterator _curr_iter;
+            vector<const Element_t *> &_vec_ref;
+            vector<const Element_t *>::iterator _curr_iter;
 
 
         protected:
             Iterator(Iterator &_other, unsigned long index);
 
-            vector<int> &getVecPtr() const;
+            vector<const Element_t *> getVecRef() const;
 
-            void setVecPtr(vector<int> &vecPtr);
+            void setVecRef(vector<const Element_t *> vecRef);
 
-            const vector<int>::iterator &getCurrIter() const;
+             vector<const Element_t *>::iterator & getCurrIter() ;
 
-            void setCurrIter(const vector<int>::iterator &currIter);
+            void setCurrIter(vector<const Element_t *>::iterator &currIter);
 
             MagicalContainer &getContainer() const;
 
@@ -130,7 +159,7 @@ namespace ariel {
 
         public:
 
-            explicit Iterator(MagicalContainer &my_container, vector<int> &vec);
+            explicit Iterator(MagicalContainer &my_container, vector<const Element_t *> &vec);
 
             /**
              * @brief Copy constructor.
@@ -205,13 +234,13 @@ namespace ariel {
 
             /**
              * @brief Dereference operator.
-             * @return The int value of this element.
+             * @return The int value of this _element.
              */
             int operator*() const;
 
             /**
              * @brief Pre-increment operator (++i).
-             * @throws std::runtime_error If this is the last element.
+             * @throws std::runtime_error If this is the last _element.
              */
             Iterator &operator++();
 
@@ -220,12 +249,12 @@ namespace ariel {
             // Iterator functions:
 
 //            /**
-//            * @return Reference to the iterator pointing to the first element of the magical_container.
+//            * @return Reference to the iterator pointing to the first _element of the magical_container.
 //            */
 //            virtual Iterator begin();
 //
 //            /**
-//            * @return Reference to the iterator pointing to the last element of the magical_container.
+//            * @return Reference to the iterator pointing to the last _element of the magical_container.
 //            */
 //            virtual Iterator end();
 
@@ -264,12 +293,12 @@ namespace ariel {
             // Override functions:
 
             /**
-            * @return Reference to the iterator pointing to the first element of the magical_container.
+            * @return Reference to the iterator pointing to the first _element of the magical_container.
             */
             AscendingIterator begin();
 
             /**
-            * @return Reference to the iterator pointing to the last element of the magical_container.
+            * @return Reference to the iterator pointing to the last _element of the magical_container.
             */
             AscendingIterator end();
         };
@@ -280,11 +309,11 @@ namespace ariel {
         /**
          * @details Iterating over the elements in cross order.
          * @details i.e. crossing from low value to high value elements:\n
-         * 1. Lowest value element\n
-         * 2. Highest value element\n
-         * 3. Second lowest value element\n
-         * 4. Second highest value element\n
-         * 5. Third lowest value element\n
+         * 1. Lowest value _element\n
+         * 2. Highest value _element\n
+         * 3. Second lowest value _element\n
+         * 4. Second highest value _element\n
+         * 5. Third lowest value _element\n
          * .\n
          * .\n
          * .
@@ -313,12 +342,12 @@ namespace ariel {
             // Override functions:
 
             /**
-            * @return Reference to the iterator pointing to the first element of the magical_container.
+            * @return Reference to the iterator pointing to the first _element of the magical_container.
             */
             virtual SideCrossIterator begin();
 
             /**
-            * @return Reference to the iterator pointing to the last element of the magical_container.
+            * @return Reference to the iterator pointing to the last _element of the magical_container.
             */
             virtual SideCrossIterator end();
         };
@@ -355,12 +384,12 @@ namespace ariel {
             // Override functions:
 
             /**
-            * @return Reference to the iterator pointing to the first element of the magical_container.
+            * @return Reference to the iterator pointing to the first _element of the magical_container.
             */
             PrimeIterator begin();
 
             /**
-            * @return Reference to the iterator pointing to the last element of the magical_container.
+            * @return Reference to the iterator pointing to the last _element of the magical_container.
             */
             PrimeIterator end();
         };

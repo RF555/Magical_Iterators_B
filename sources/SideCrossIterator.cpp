@@ -30,7 +30,7 @@ namespace ariel {
         if (this != &_other) {
             this->setContainer(_other.getContainer());
             this->setIndex(_other.getIndex());
-            this->setVecPtr(_other.getVecPtr());
+            this->setVecRef(_other.getVecRef());
             this->setCurrIter(_other.getCurrIter());
         }
         return *this;
@@ -44,6 +44,6 @@ namespace ariel {
     }
 
     MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
-        return SideCrossIterator(*this, this->getVecPtr().size());
+        return SideCrossIterator(*this, this->getVecRef().size());
     }
 }
