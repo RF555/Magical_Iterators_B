@@ -1,6 +1,5 @@
 #include "MagicalContainer.hpp"
 
-#include <typeinfo>
 
 using namespace std;
 
@@ -66,7 +65,7 @@ namespace ariel {
         if (this->_vec_ref.empty()) {
             return true;
         }
-        return *this->_curr_iter == *_other._curr_iter;
+        return this->_curr_iter == _other._curr_iter;
     }
 
     bool MagicalContainer::Iterator::operator!=(const MagicalContainer::Iterator &_other) const {
@@ -79,7 +78,7 @@ namespace ariel {
         if (this->_vec_ref.empty()) {
             return false;
         }
-        return *this->_curr_iter != *_other._curr_iter;
+        return this->_curr_iter != _other._curr_iter;
     }
 
     bool MagicalContainer::Iterator::operator>(const MagicalContainer::Iterator &_other) const {
@@ -117,8 +116,9 @@ namespace ariel {
     }
 
     MagicalContainer::Iterator &MagicalContainer::Iterator::operator++() {
-        if (this->_index >= this->_vec_ref.size()) {
-            throw std::runtime_error("RUNTIME ERROR: Can not iterate past the last _element!\n");
+        if (this->_curr_iter == this->_vec_ref.end()) {
+            throw std::runtime_error(
+                    EXCEPTION_PRINT "RUNTIME ERROR:" RESET_COLOR " Can not iterate past the last element!\n");
         }
         ++this->_index;
         ++this->_curr_iter;
@@ -126,9 +126,6 @@ namespace ariel {
     }
 
     MagicalContainer &MagicalContainer::Iterator::getContainer() const {
-//        if (this->_index >= this->_container.size()) {
-//            throw std::runtime_error("RUNTIME ERROR: Out of range!\n");
-//        }
         return _container;
     }
 
@@ -166,7 +163,6 @@ namespace ariel {
 
     MagicalContainer::Iterator::Iterator(Iterator &_other, unsigned long index) :
             _container(_other._container),
-            _index(index),
             _vec_ref(_other._vec_ref) {
         if (_other._vec_ref.empty()) {
             this->_index = 0;

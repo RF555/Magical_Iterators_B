@@ -2,7 +2,7 @@
 #define MAGICAL_CONTAINER_HPP
 
 
-//#include "../TOOLS/MY_DEBUG_TOOL.hpp"
+//#include "../MY_DTOOLS/MY_DTOOL.hpp"
 
 
 #include <iostream>
@@ -11,6 +11,8 @@
 #include <set>
 #include <iterator>
 
+#define EXCEPTION_PRINT "\x1b[0;31m"
+#define RESET_COLOR "\x1b[0m"
 
 using namespace std;
 
@@ -92,7 +94,6 @@ namespace ariel {
 
         static void printVector(vector<const Element_t *> &_vec);
 
-
         void printOG();
 
         void printAscend();
@@ -150,7 +151,6 @@ namespace ariel {
             MagicalContainer &getContainer() const;
 
             void setContainer(MagicalContainer &container);
-
 
             void setIndex(unsigned long index);
 
@@ -258,6 +258,7 @@ namespace ariel {
 //            */
 //            virtual Iterator end();
 
+            unsigned long size() { return this->_vec_ref.size(); }
 
         };
 
@@ -402,15 +403,5 @@ namespace ariel {
 
 }
 #endif // MAGICAL_CONTAINER_HPP
-
-
-
-
-
-
-
-
-
-
 
 

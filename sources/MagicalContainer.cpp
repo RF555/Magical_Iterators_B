@@ -1,7 +1,6 @@
 #include "MagicalContainer.hpp"
-#include <algorithm>
+
 #include <cmath>
-#include <typeinfo>
 
 namespace ariel {
 
@@ -9,21 +8,17 @@ namespace ariel {
         if (num <= 1) {
             return false;
         }
-
         if (num <= 3) {
             return true;
         }
-
         if (num % 2 == 0 || num % 3 == 0) {
             return false;
         }
-
         for (int i = 5; i * i <= num; i = i + 6) {
             if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -70,9 +65,11 @@ namespace ariel {
 
     void MagicalContainer::updateAscendPrime(bool prime) {
         this->ascend_vector.clear();
+
         if (prime) {
             this->prime_vector.clear();
         }
+
         auto ascend_iter = this->og_set.begin();
 
         for (; ascend_iter != this->og_set.end(); ++ascend_iter) {
@@ -114,6 +111,7 @@ namespace ariel {
         } else {
             Element_t temp(element);
             this->og_set.erase(temp);
+
             updateAscendPrime(temp._prime);
 
             this->updateCross();
@@ -150,15 +148,6 @@ namespace ariel {
 
         return output;
     }
-
-//    ostream &streamVector(ostream &output, vector<Element_t *> &_vec) {
-//        output << "{ ";
-//        for (auto element: _vec) {
-//            cout << element << " ";
-//        }
-//        output << "}  size: " << _vec.size() << "\n";
-//        return output;
-//    }
 
     void MagicalContainer::printVector(vector<const Element_t *> &_vec) {
         cout << "{ ";
@@ -200,11 +189,6 @@ namespace ariel {
         return this->og_set.contains(temp);
     }
 
-
 }
-
-
-
-
 
 
