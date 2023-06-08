@@ -8,7 +8,7 @@ using namespace std;
 TEST_CASE("Adding elements to MagicalContainer") {
     MagicalContainer container;
 
-    SUBCASE("Adding a single _element") {
+    SUBCASE("Adding a single element") {
         container.addElement(10);
         CHECK(container.size() == 1);
     }
@@ -25,14 +25,14 @@ TEST_CASE("Adding elements to MagicalContainer") {
 TEST_CASE("Removing elements from MagicalContainer") {
     MagicalContainer container;
 
-    SUBCASE("Removing an existing _element") {
+    SUBCASE("Removing an existing element") {
         container.addElement(10);
         container.addElement(20);
         CHECK_NOTHROW(container.removeElement(10));
         CHECK(container.size() == 1);
     }
 
-    SUBCASE("Removing a non-existing _element") {
+    SUBCASE("Removing a non-existing element") {
         container.addElement(10);
         container.addElement(20);
         CHECK_THROWS_AS(container.removeElement(30), runtime_error);
@@ -65,7 +65,7 @@ TEST_CASE("AscendingIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty magical_container") {
+    SUBCASE("Iterating over an empty container") {
         MagicalContainer emptyContainer;
         MagicalContainer::AscendingIterator it(emptyContainer);
         CHECK(it == it.end());
@@ -93,7 +93,7 @@ TEST_CASE("SideCrossIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty magical_container") {
+    SUBCASE("Iterating over an empty container") {
         MagicalContainer emptyContainer;
         MagicalContainer::SideCrossIterator it(emptyContainer);
         CHECK(it == it.end());
@@ -121,15 +121,15 @@ TEST_CASE("PrimeIterator") {
         CHECK(it == it.end());
     }
 
-    SUBCASE("Iterating over an empty magical_container") {
+    SUBCASE("Iterating over an empty container") {
         MagicalContainer emptyContainer;
         MagicalContainer::PrimeIterator it(emptyContainer);
         CHECK(it == it.end());
     }
 }
 //--------------------------------------------------------------
-// Test case for comparing iterators from the same magical_container
-TEST_CASE("Comparing iterators from the same magical_container") {
+// Test case for comparing iterators from the same container
+TEST_CASE("Comparing iterators from the same container") {
     MagicalContainer container;
     for (int i = 1; i <= 10; ++i) {
         container.addElement(i * 10);
@@ -403,16 +403,9 @@ TEST_CASE("Iterator Increment Beyond End") {
 
         // Increment until the end
         while (it != it.end()) {
-            cout << "it: " << it.getElement() << endl;
-            cout << "it index: " << it.getIndex() << endl;
-
             ++it;
         }
 
-        cout << "end: " << it.end().getElement() << endl;
-        cout << "end index: " << it.end().getIndex() << endl;
-        CHECK(it==it.end());
-        cout << it.getIndex() << endl;
         // Attempt to increment beyond the end
         CHECK_THROWS_AS(++it, runtime_error);
     }
@@ -537,7 +530,7 @@ TEST_CASE("AscendingIterator with Negative and Positive Numbers") {
     }
 }
 
-// Test case for the PrimeIterator with no prime numbers in the magical_container
+// Test case for the PrimeIterator with no prime numbers in the container
 TEST_CASE("PrimeIterator with No Prime Numbers") {
     MagicalContainer container;
     container.addElement(4);
@@ -555,8 +548,8 @@ TEST_CASE("PrimeIterator with No Prime Numbers") {
     }
 }
 
-// Test case for the SideCrossIterator with a single _element in the magical_container
-TEST_CASE("SideCrossIterator with Single Element_t") {
+// Test case for the SideCrossIterator with a single element in the container
+TEST_CASE("SideCrossIterator with Single Element") {
     MagicalContainer container;
     container.addElement(100);
 
@@ -580,24 +573,26 @@ TEST_CASE("operator= throws when iterators are pointing at different containers"
     container2.addElement(5);
     container2.addElement(6);
 
-    SUBCASE("AscendingIterator") {
+    SUBCASE("AscendingIterator")
+    {
         MagicalContainer::AscendingIterator it1(container1);
         MagicalContainer::AscendingIterator it2(container2);
 
         CHECK_THROWS_AS(it1 = it2, std::runtime_error);
     }
-    SUBCASE("SideCrossIterator") {
+    SUBCASE("SideCrossIterator")
+    {
         MagicalContainer::SideCrossIterator it1(container1);
         MagicalContainer::SideCrossIterator it2(container2);
 
         CHECK_THROWS_AS(it1 = it2, std::runtime_error);
     }
-    SUBCASE("AscendingIterator") {
+    SUBCASE("AscendingIterator")
+    {
         MagicalContainer::PrimeIterator it1(container1);
         MagicalContainer::PrimeIterator it2(container2);
 
         CHECK_THROWS_AS(it1 = it2, std::runtime_error);
     }
 }
-
 
