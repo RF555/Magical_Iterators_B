@@ -11,8 +11,6 @@
 #include <set>
 #include <iterator>
 
-#define EXCEPTION_PRINT "\x1b[0;31m"
-#define RESET_COLOR "\x1b[0m"
 
 using namespace std;
 
@@ -25,6 +23,8 @@ namespace ariel {
      * @return True - if num is indeed prime.\n False - else.
      */
     bool isPrime(int num);
+
+    std::string getErrorMessage(const std::string &_type, const std::string &message);
 
     class MagicalContainer {
         /************************************
@@ -40,7 +40,7 @@ namespace ariel {
                     _element(element),
                     _prime(isPrime(element)) {}
 
-            Element_t &operator=(const Element_t &_other) = default;
+//            Element_t &operator=(const Element_t &_other) = default;
 
             bool operator==(const Element_t &_other) const { return this->_element == _other._element; }
 

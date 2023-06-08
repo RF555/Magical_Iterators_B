@@ -10,7 +10,7 @@ namespace ariel {
     MagicalContainer::PrimeIterator::PrimeIterator(const MagicalContainer::PrimeIterator &_other) :
             Iterator(_other) {
         if (&this->getContainer() != &_other.getContainer()) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Must have the same container!\n"));
         }
     }
 
@@ -46,6 +46,7 @@ namespace ariel {
     MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() {
         return PrimeIterator(*this, this->getVecRef().size() - 1);
     }
+
     MagicalContainer::Iterator &MagicalContainer::PrimeIterator::operator++() {
         return Iterator::operator++();
     }

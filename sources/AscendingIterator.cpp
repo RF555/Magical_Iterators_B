@@ -10,7 +10,7 @@ namespace ariel {
     MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &_other) :
             Iterator(_other) {
         if (&this->getContainer() != &_other.getContainer()) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR:", "ust have the same container!\n"));
         }
     }
 

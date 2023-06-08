@@ -22,6 +22,10 @@ namespace ariel {
         return true;
     }
 
+    std::string getErrorMessage(const std::string &_type, const std::string &message) {
+        return "\x1b[0;31m" + _type + ": \x1b[0m" + message;
+    }
+
     MagicalContainer::MagicalContainer() = default;
 
     MagicalContainer::MagicalContainer(const ariel::MagicalContainer &_other) :
@@ -107,7 +111,7 @@ namespace ariel {
     void MagicalContainer::removeElement(int element) {
         bool exists = this->contains(element);
         if (!exists) {
-            throw std::runtime_error("RUNTIME ERROR: Element_t doesn't exist in the container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Element_t doesn't exist in the container!\n"));
         } else {
             Element_t temp(element);
             this->og_set.erase(temp);

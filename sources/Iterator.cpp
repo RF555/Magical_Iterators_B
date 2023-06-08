@@ -18,7 +18,7 @@ namespace ariel {
             _vec_ref(_other._vec_ref),
             _curr_iter(_other._curr_iter) {
         if (typeid(this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
     }
 
@@ -32,11 +32,11 @@ namespace ariel {
 
     MagicalContainer::Iterator &MagicalContainer::Iterator::operator=(const MagicalContainer::Iterator &_other) {
         if (typeid(this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
         if (this != &_other) {
             if (&this->_container != &_other._container) {
-                throw std::runtime_error("RUNTIME ERROR: have of the same container!\n");
+                throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "have of the same container!\n"));
             }
             this->_index = _other._index;
             this->_vec_ref = _other._vec_ref;
@@ -57,10 +57,10 @@ namespace ariel {
 
     bool MagicalContainer::Iterator::operator==(const MagicalContainer::Iterator &_other) const {
         if (typeid(*this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
         if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Must have the same container!\n"));
         }
         if (this->_vec_ref.empty()) {
             return true;
@@ -70,10 +70,10 @@ namespace ariel {
 
     bool MagicalContainer::Iterator::operator!=(const MagicalContainer::Iterator &_other) const {
         if (typeid(*this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
         if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Must have the same container!\n"));
         }
         if (this->_vec_ref.empty()) {
             return false;
@@ -83,10 +83,10 @@ namespace ariel {
 
     bool MagicalContainer::Iterator::operator>(const MagicalContainer::Iterator &_other) const {
         if (typeid(*this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
         if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Must have the same container!\n"));
         }
         if (this->_vec_ref.empty()) {
             return false;
@@ -96,10 +96,10 @@ namespace ariel {
 
     bool MagicalContainer::Iterator::operator<(const MagicalContainer::Iterator &_other) const {
         if (typeid(*this) != typeid(_other)) {
-            throw std::runtime_error("RUNTIME ERROR: Both iterators must be of the same type!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Both iterators must be of the same type!\n"));
         }
         if (&this->_container != &_other._container) {
-            throw std::runtime_error("RUNTIME ERROR: Must have the same container!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Must have the same container!\n"));
         }
         if (this->_vec_ref.empty()) {
             return false;
@@ -117,8 +117,7 @@ namespace ariel {
 
     MagicalContainer::Iterator &MagicalContainer::Iterator::operator++() {
         if (this->_curr_iter == this->_vec_ref.end()) {
-            throw std::runtime_error(
-                    EXCEPTION_PRINT "RUNTIME ERROR:" RESET_COLOR " Can not iterate past the last element!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Can not iterate past the last element!\\n"));
         }
         ++this->_index;
         ++this->_curr_iter;
@@ -168,7 +167,7 @@ namespace ariel {
             this->_index = 0;
             this->_curr_iter = _other._vec_ref.begin();
         } else if (index >= _other._vec_ref.size()) {
-            throw std::runtime_error("RUNTIME ERROR: Index out of range!\n");
+            throw std::runtime_error(getErrorMessage("RUNTIME ERROR", "Index out of range!\n"));
         } else if (index == _other._vec_ref.size() - 1) {
             this->_curr_iter = _other._vec_ref.end();
         } else if (index == 0) {
