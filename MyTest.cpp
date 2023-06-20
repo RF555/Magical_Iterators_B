@@ -147,7 +147,6 @@ TEST_CASE("Add elements after iterator creation") {
     container.addElement(18);
     CHECK(container.size() == 7);
 
-
     CHECK(*ascend_it == 2);
     ++ascend_it;
     CHECK(*ascend_it == 5);
@@ -161,7 +160,6 @@ TEST_CASE("Add elements after iterator creation") {
     CHECK(*ascend_it == 22);
     ++ascend_it;
     CHECK(*ascend_it == 30);
-
 
     CHECK(*cross_it == 2);
     ++cross_it;
@@ -183,6 +181,10 @@ TEST_CASE("Add elements after iterator creation") {
     CHECK(*prime_it == 5);
     ++prime_it;
     CHECK(*prime_it == 17);
+
+    container.addElement(23);
+    CHECK(container.size() == 8);
+
 }
 
 TEST_CASE("Iterator comparison") {
